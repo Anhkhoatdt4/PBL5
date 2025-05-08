@@ -1,0 +1,13 @@
+{
+  "liveServer.settings.ignoreFiles": [
+    "**/*.png",
+    "**/*.jpg",
+    "**/*.jpeg",
+    "**/*.webp",
+    "**/*.gif",
+    "**/*.js",
+    "**/*.json",
+    "**/images/**",
+    // "**/*.html"
+  ]
+}

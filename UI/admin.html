@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="admin-info">
+            <img src="https://i.pinimg.com/originals/78/46/75/7846752cfd7b02455fa07c42a5ab2f37.jpg">
+            <p>Kong Bẻo</p>
+            <li>Chào mừng bạn trở lại</li>
+        </div>
+        <ul>
+            <li><a href="#" onclick="loadPage('dashboard'); return false;"><i class="fa-solid fa-chart-bar"></i> Thống kê & Báo cáo</a></li>
+            <li><a href="#" onclick="loadPage('product_ad'); return false;"><i class="fa-solid fa-box"></i> Quản lý sản phẩm</a></li>
+            <li><a href="#" onclick="loadPage('order_ad'); return false;"><i class="fa-solid fa-shopping-cart"></i> Quản lý đơn hàng</a></li>
+            <li><a href="#" onclick="loadPage('staff_ad'); return false;"><i class="fa-solid fa-user"></i> Quản lý nhân viên</a></li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <header>
+            <div class="time">
+                <i class="fa-solid fa-clock"></i> <span id="current-time"></span>
+            </div>
+            <a href="login.html" class="logout-btn"><i class="fa-solid fa-sign-out-alt"></i> Đăng xuất</a>
+        </header>
+        <div class="content" id="content">
+            
+        </div>
+    </div>
+
+    <script>
+        function updateTime() {
+            const now = new Date();
+            const formattedTime = now.toLocaleString('vi-VN', {
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit'
+            });
+            document.getElementById("current-time").innerText = formattedTime.replace("lúc", "");
+        }
+        setInterval(updateTime, 500);
+
+        function loadPage(page) {
+            let content = document.getElementById('content');
+            content.innerHTML = '<p>Đang tải...</p>';
+
+            fetch(page + '.html')
+                .then(response => response.text())
+                .then(data => {
+                    content.innerHTML = data;
+                    if (page === 'order_ad'){
+                        const script = document.createElement("script");
+                        script.src = "order_ad.js";
+                        script.onload = () => loadOrders();
+                        document.body.appendChild(script);
+                    }
+                })
+                .catch(error => {
+                    content.innerHTML = '<p>Lỗi khi tải trang.</p>';
+                    console.error("Lỗi:", error);
+                });
+        
+        }
+        loadPage('dashboard');
+    </script>
+</body>
+</html>
+

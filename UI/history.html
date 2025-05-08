@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lịch sử đơn hàng</title>
+    <link rel="stylesheet" href="history.css"> <!-- Liên kết với file CSS của bạn -->
+</head>
+
+<body>
+    <!-- Thanh Header -->
+    <header>
+        <div class="logo-container">
+            <div class="logo">
+                <img src="image/logo.png" alt="Logo">
+                <h1>BKN Fruits</h1>
+            </div>
+        </div>
+        <nav>
+            <a href="home.html" class="nav-link">🏠 Trang chủ</a>
+        </nav>
+    </header>
+
+    <main class="search-history-content">
+        <h2>Tra cứu lịch sử đơn hàng</h2>
+
+        <form onsubmit="event.preventDefault(); fetchOrders();" class="search-form">
+            <div class="form-group">
+                <label for="username">Tên người dùng:</label>
+                <input type="text" id="username" name="username" required placeholder="Nhập tên người dùng">
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Số điện thoại:</label>
+                <input type="text" id="phone" name="phone" required placeholder="Nhập số điện thoại">
+            </div>
+
+            <button type="submit">Tìm kiếm</button>
+        </form>
+
+        <div id="orderContainer" class="order-grid"></div>
+
+        </div>
+
+        <div id="overlay" class="overlay"></div>
+
+        <!-- Modal để hiển thị chi tiết đơn hàng -->
+        <div id="orderDetailModal" class="order-detail-modal"></div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 BKN Fruits</p>
+    </footer>
+    <script>
+        async function fetchOrders() {
+            const username = document.getElementById("username").value;
+            const phoneNumber = document.getElementById("phone").value;
+            console.log(username + " , " + phoneNumber);
+            const url = "http://localhost:8080/api/orders/search";
+            const response = await fetch(`${url}?username=${encodeURIComponent(username)}&phoneNumber=${encodeURIComponent(phoneNumber)}`);
+            const orders = await response.json();
+            console.log("orders : ", orders);
+
+            renderOrders(orders);
+
+            function renderOrders(orders) {
+                const container = document.getElementById("orderContainer");
+                container.innerHTML = "";
+
+                if (orders.length === 0) {
+                    container.innerHTML = "<p>Không có đơn hàng nào!</p>";
+                    return;
+                }
+
+                orders.forEach(order => {
+                    const orderDiv = document.createElement("div");
+                    orderDiv.classList.add("order-item");
+
+                    const detailId = `details-${order.id}`;
+
+                    orderDiv.innerHTML = `
+                <div style="margin-bottom: 10px;">
+                    <h3>Đơn hàng #${order.id}</h3>
+                    <p>Ngày: ${new Date(order.createdAt).toLocaleDateString()}</p>
+                    <p>Tổng tiền: ${order.totalPrice.toLocaleString()} đ</p>
+                    <button onclick="toggleDetails('${detailId}', '${encodeURIComponent(JSON.stringify(order.items))}')">Xem chi tiết</button>
+                    <div id="${detailId}" style="display:none; margin-top: 10px;"></div>
+                </div>
+            `;
+
+                    container.appendChild(orderDiv);
+                });
+            }
+        }
+
+        function toggleDetails(detailId, itemsJSON) {
+            console.log("Toggle Details called for ID:", detailId);
+            console.log("Items JSON received:", itemsJSON); // Log the received JSON
+
+            const overlay = document.getElementById("overlay");
+            const modal = document.getElementById("orderDetailModal");
+
+            overlay.addEventListener("click", function () {
+                modal.style.display = "none";
+                overlay.style.display = "none";
+            });
+
+
+            if (modal.style.display === "none") {
+                try {
+                    const items = JSON.parse(decodeURIComponent(itemsJSON)); // Decode and parse the JSON string back to an object
+                    console.log("Parsed items:", items); // Log the parsed items
+
+                    let html = items.map(item => `
+                    <div class="order-detail-card">
+                        <img src="${item.imageUrl}" alt="${item.fruitName}" class="order-image" />
+                        <div class="order-info">
+                            <h3 class="order-name">${item.fruitName}</h3>
+                            <p class="order-weight">Khối lượng: ${item.weight} kg</p>
+                            <p class="order-price">Đơn giá: ${item.pricePerKg.toLocaleString()} đ/kg</p>
+                            <p class="order-total">Thành tiền: ${item.totalPrice.toLocaleString()} đ</p>
+                        </div>
+                    </div>
+                `).join("");
+
+                    modal.innerHTML = html;
+                    modal.style.display = "block";
+                    overlay.style.display = "block";
+
+                } catch (error) {
+                    console.error("Error parsing items:", error); // Log parsing error
+                    modal.innerHTML = "<p>Không thể hiển thị chi tiết đơn hàng.</p>";
+                }
+            } else {
+                modal.style.display = "none";
+                overlay.style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>

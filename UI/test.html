@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VNPay QR Test</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <h1>VNPay QR Test</h1>
+  <div id="qr-container"></div>
+  <script>
+    async function fetchQrText() {
+      try {
+        // Gọi API để lấy nội dung QR
+        const response = await fetch("http://localhost:3000/api/qr-text");
+        const data = await response.json();
+        const qrText = data.qrText;
+        console.log("Nội dung mã QR:", qrText);
+        // Hiển thị mã QR
+        const qrContainer = document.getElementById("qr-container");
+        qrContainer.innerHTML = ""; // Xóa mã QR cũ nếu có
+        new QRCode(qrContainer, {
+          text: qrText,
+          width: 256,
+          height: 256,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H,
+        });
+      } catch (error) {
+        console.error("Lỗi khi lấy mã QR:", error);
+      }
+    }
+
+    // Gọi hàm để lấy và hiển thị mã QR
+    fetchQrText();
+  </script>
+</body>
+</html>
+
+<!-- npm install express 
+//   npm install cors -->

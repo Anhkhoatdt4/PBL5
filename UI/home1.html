@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <title>Home - Fresh Fruits</title>
+    <link rel="stylesheet" href="home1.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-nav">
+                <div class="logo">
+                    <img src="image/logo.png" alt="Logo">
+                    <span class="logo-text">BKN Fruits</span>
+                </div>  
+    
+                <nav class = "nav-header">
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="#product">Our Products</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact Us</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+            <div class="header-icons">
+                <a href="order.html" class="order-link">
+                    <i class="fa-solid fa-envelope"></i>
+                </a>
+                <a href="user_info.html" class="user">
+                    <i class="fa-solid fa-user" style="color: rgb(14, 14, 14);"></i>
+                </a>
+                <span id="fruit-count">0</span>
+                <a href="login.html" class="login-btn">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="products" id="product">
+        <h2>Danh sách sản phẩm</h2>
+        <div class="product-container">
+            <div class="product-page active">
+                <div class="product"><img src="https://media.istockphoto.com/id/1272346946/vi/vec-to/t%C3%A1o-%C4%91%E1%BB%8F-v%E1%BB%9Bi-l%C3%A1-xanh-c%C3%B4-l%E1%BA%ADp-tr%C3%AAn-n%E1%BB%81n-tr%E1%BA%AFng-thi%E1%BA%BFt-k%E1%BA%BF-ph%E1%BA%B3ng-minh-h%E1%BB%8Da-vect%C6%A1-tr%C3%A1i-c%C3%A2y.jpg?s=612x612&w=0&k=20&c=caqQeq4fdd1vfqqBc75sLAfE0Qo9nwxW_etWCD50Ev0="><h3>Táo</h3><p>30.000 VNĐ/kg</p></div>
+                <div class="product"><img src="https://suckhoedoisong.qltns.mediacdn.vn/zoom/600_315/324455921873985536/2022/12/26/chuoi-chin-1672069606008863767660-84-0-534-720-crop-1672069614758458943534.jpg"><h3>Chuối</h3><p>20.000 VNĐ/kg</p></div>
+                <div class="product"><img src="https://media.istockphoto.com/id/544357706/vi/anh/tr%C3%A1i-c%C3%A2y-m%C3%A0u-cam-l%C3%A1t-v%E1%BB%9Bi-l%C3%A1-b%E1%BB%8B-c%C3%B4-l%E1%BA%ADp-tr%C3%AAn-m%C3%A0u-tr%E1%BA%AFng.jpg?s=612x612&w=0&k=20&c=A_zegWu46SiTVmtsWBzwPRLU55jMfVEP7U7VBMN46DI="><h3>Cam</h3><p>40.000 VNĐ/kg</p></div>
+                <div class="product"><img src="https://media.istockphoto.com/id/489520104/vi/anh/nho-xanh-c%C3%B4-l%E1%BA%ADp-tr%C3%AAn-n%E1%BB%81n-tr%E1%BA%AFng.jpg?s=612x612&w=0&k=20&c=y6_CXaeGSlIWwYu2TNiEQb5txs_jx7F_pN4uRCxy_2c="><h3>Nho</h3><p>50.000 VNĐ/kg</p></div>
+                <div class="product"><img src="https://hinh365.com/wp-content/uploads/2020/06/thu-vien-anh-dep-ve-qua-dua-hau-voi-khoan-100-619-tam-anh-chat-luong-cuc-cao.jpg"><h3>Dưa hấu</h3><p>25.000 VNĐ/kg</p></div>
+                <div class="product"><img src="https://static.kinhtedothi.vn/w960/images/upload/2023/07/18/nhung-nguoi-khong-nen-an-dua-2.jpg"><h3>Dứa</h3><p>35.000 VNĐ/kg</p></div>
+            </div>
+
+            <div class="product-page">
+                <div class="product"><img src="https://media.istockphoto.com/id/12345678/kiwi.jpg"><h3>Kiwi</h3><p>60.000 VNĐ/kg</p></div>
+                <div class="product"><img src="https://media.istockphoto.com/id/87654321/dau-tay.jpg"><h3>Dâu tây</h3><p>70.000 VNĐ/kg</p></div>
+                <div class="product"><img src="https://media.istockphoto.com/id/23456789/le.jpg"><h3>Lê</h3><p>45.000 VNĐ/kg</p></div>
+                <div class="product"><img src="https://media.istockphoto.com/id/98765432/man.jpg"><h3>Mận</h3><p>55.000 VNĐ/kg</p></div>
+                <div class="product"><img src="https://media.istockphoto.com/id/45678912/mit.jpg"><h3>Mít</h3><p>30.000 VNĐ/kg</p></div>
+                <div class="product"><img src="https://media.istockphoto.com/id/54321678/xoai.jpg"><h3>Xoài</h3><p>50.000 VNĐ/kg</p></div>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <button onclick="changePage(0)">1</button>
+            <button onclick="changePage(1)">2</button>
+        </div>
+    </section>   
+
+    <section class="about" id="about">
+        <h2>About Us</h2>
+        <p>Chúng tôi chuyên cung cấp các loại trái cây tươi ngon, chất lượng cao từ các nông trại sạch. Với tiêu chí "Sạch - Tươi - Ngon", chúng tôi cam kết:</p>
+        <ul style="text-align: center;">
+            <li>Không sử dụng hóa chất độc hại</li>
+            <li>Đảm bảo nguồn gốc xuất xứ rõ ràng</li>
+            <li>Giao hàng nhanh chóng và tiện lợi</li>
+        </ul>
+        <p>Hãy để chúng tôi giúp bạn có những bữa ăn lành mạnh và giàu dinh dưỡng!</p>
+    </section>
+    <hr class="line">
+    <section class="contact" id="contact">
+        <h2>Contact Us</h2>
+        <p>Hãy liên hệ với chúng tôi nếu bạn có bất kỳ câu hỏi nào hoặc muốn mua hàng.</p>
+        <div class="contact-info">
+            <p><i class="fa-solid fa-location-pin"></i> Địa chỉ: 54 Nguyễn Lương Bằng, Hòa Khánh Bắc, Liên Chiểu, Đà Nẵng</p>
+            <p><i class="fa-solid fa-phone"></i> Hotline: 0987 654 321</p>
+            <p><i class="fa-solid fa-envelope"></i> Email: bkn@gmail.com</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3>Fresh Fruits</h3>
+                <p>Chuyên cung cấp các loại trái cây tươi ngon, đảm bảo nguồn gốc sạch và an toàn. Cam kết mang đến sức khỏe và sự hài lòng cho khách hàng.</p>
+            </div>
+    
+            <div class="footer-links">
+                <h3>Danh mục nhanh</h3>
+                <ul>
+                    <li><a href="home.html">Trang chủ</a></li>
+                    <li><a href="#product">Sản phẩm</a></li>
+                    <li><a href="#about">Về chúng tôi</a></li>
+                    <li><a href="#contact">Liên hệ</a></li>
+                </ul>
+            </div>
+    
+            <div class="footer-social">
+                <h3>Kết nối với chúng tôi</h3>
+                <div class="social-icons">
+                    <a href="#"><img src="image/facebook.png" alt="Facebook"></a>
+                    <a href="#"><img src="image/ig.jpeg" alt="Instagram"></a>
+                    <a href="#"><img src="image/Icon_of_Zalo.svg.png" alt="Zalo"></a>
+                </div>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <p>&copy; BKN Fruits. Mỗi ngày trái cây, mỗi ngày sức khỏe.</p>
+        </div>
+    </footer>
+    <script>
+            let pages = document.querySelectorAll('.product-page');
+            let currentPage = 0;
+
+            function changePage(index) {
+                pages[currentPage].style.display = 'none';
+                currentPage = index;
+                pages[currentPage].style.display = 'grid';
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+                pages[0].style.display = 'grid';
+            });
+    </script>
+    
+</body>
+</html>

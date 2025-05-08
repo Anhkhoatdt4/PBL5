@@ -1,0 +1,165 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e0e5ec;
+}
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.container {
+    display: flex;
+    width: 900px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.left-section {
+    width: 50%;
+}
+
+.left-section img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.right-section {
+    width: 50%;
+    padding: 30px;
+    background-color: #4db6ac;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.google-btn {
+    background: white;
+    color: #2c6a5f;
+    padding: 8px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px; /* Tạo khoảng cách giữa các icon */
+    margin-bottom: 15px;
+}
+
+.social-icon {
+    background: white;
+    width: 40px; /* Điều chỉnh kích thước icon */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Thêm hiệu ứng đổ bóng */
+    transition: transform 0.3s ease-in-out;
+}
+
+.social-icon img {
+    width: 24px; /* Điều chỉnh kích thước ảnh bên trong */
+    height: 24px;
+    object-fit: contain; /* Giữ nguyên tỉ lệ ảnh */
+}
+
+.social-icon:hover {
+    transform: scale(1.1); /* Hiệu ứng phóng to nhẹ khi di chuột */
+}
+
+
+.or-text {
+    margin: 10px 0;
+}
+
+.form-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+input {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 10px;
+}
+
+.terms {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+.terms a {
+    color: white;
+    text-decoration: underline;
+}
+input[type="checkbox"] {
+    width: 14px;
+}
+
+.signup-btn {
+    width: 100%;
+    padding: 10px;
+    background: #82c49d;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.login-text {
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.login-text a {
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+    margin-left: 5px;
+    padding: 5px 10px;
+    background: #2c6a5f;
+    border-radius: 10px;
+    transition: background 0.3s ease-in-out;
+}
+
+.login-text a:hover {
+    background: #1f4f47;
+}

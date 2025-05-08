@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin người dùng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="user_info.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="image/logo.png" alt="Logo">
+            <span>BKN Fruits</span>
+        </div>        
+        <nav>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="#product">Our Products</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#contact">Contact Us</a></li>
+            </ul>
+        </nav>
+        <a href="login.html" class="login-btn">Logout</a>
+    </header>
+    
+    <section class="user-info">
+        <div class="container">
+            <h2>Thông tin cá nhân</h2>
+            <form id="user-form">
+                <div class="form-group">
+                    <label for="fullname"><i class="fa-solid fa-user"></i> Họ và Tên:</label>
+                    <input type="text" id="fullname" name="fullname" value="Trương Công Bảo">
+                </div>
+
+                <div class="form-group">
+                    <label for="password"><i class="fa-solid fa-lock"></i> Mật khẩu:</label>
+                    <input type="password" id="password" name="password" value="12345678">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone"><i class="fa-solid fa-phone"></i> Số điện thoại:</label>
+                    <input type="text" id="phone" name="phone" value="0987654321">
+                </div>
+
+                <div class="form-group">
+                    <label for="address"><i class="fa-solid fa-location-dot"></i> Địa chỉ:</label>
+                    <input type="text" id="address" name="address" value="54 Nguyễn Lương Bằng, Đà Nẵng">
+                </div>
+
+                <div class="btn-container">
+                    <button type="submit"><i class="fa-solid fa-save"></i> Cập nhật thông tin</button>
+                    <a href="home.html" class="btn-home"><i class="fa-solid fa-arrow-left"></i> Quay về trang chủ</a>
+                </div>
+            </form>
+        </div>
+    </section>
+    
+    <footer>
+        <p>&copy; BKN Fruits. Mỗi ngày trái cây, mỗi ngày sức khỏe.</p>
+    </footer>
+</body>
+</html>

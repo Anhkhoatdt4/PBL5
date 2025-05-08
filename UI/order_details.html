@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <title>Order Details - BKN Fruits</title>
+    <link rel="stylesheet" href="order_details.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="image/logo.png" alt="Logo">
+            <span>BKN Fruits</span>
+        </div>
+        <a href="admin.html" class="back-btn"><i class="fa-duotone fa-solid fa-backward-step"></i> Back to Orders</a>
+    </header>
+
+    <section class="order-details">
+        <h2 id="orderTitle">Chi tiết Hóa đơn</h2>
+        <h4>Danh sách trái cây:</h4>
+        <div id="orderItems" class="order-items"></div>
+        <div id="orderTotal" class="total-price"></div>
+        <!-- <button id="exportInvoice" class="export-btn"><i class="fa-solid fa-file-export"></i> Xuất Hóa Đơn</button> -->
+    </section>
+
+    <footer>
+        <p>&copy; BKN Fruits. Mỗi ngày trái cây, mỗi ngày sức khỏe.</p>
+    </footer>
+    <script src="order_details.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+body {
+    text-align: center;
+    background: #fff8e1;
+    font-family: Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background: linear-gradient(45deg, #4caf50, #81c784);
+    color: white;
+    font-weight: bold;
+    margin-top: -10px;
+    width: 95%;
+    margin-left: -10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 22px;
+}
+
+.logo img {
+    width: 40px;
+    height: 40px;
+}
+
+.back-btn {
+    background: white;
+    color: #2c6a5f;
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.order-details {
+    width: 80%;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+h2 {
+    color: #4caf50;
+    font-size: 24px;
+}
+
+h4 {
+    color: #ff6f61;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+/* Danh sách sản phẩm */
+.order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px auto;
+    width: 100%;
+}
+
+/* Mỗi sản phẩm */
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    background: #e3f2fd;
+    padding: 12px;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.order-item:hover {
+    background: #bbdefb;
+}
+
+/* Cột trái cây */
+.fruit {
+    width: 40%;
+    text-align: left;
+}
+
+/* Cột cân nặng */
+.weight {
+    width: 20%;
+    text-align: center;
+    font-weight: bold;
+    color: #ff9800;
+}
+
+/* Cột giá tiền */
+.price {
+    width: 30%;
+    text-align: right;
+    font-weight: bold;
+    color: #d32f2f;
+}
+
+/* Tổng tiền */
+.total-price {
+    margin-top: 20px;
+    padding: 15px;
+    background: #ff6f61;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 8px;
+    text-align: right;
+}
+
+footer {
+    margin-top: 20px;
+    padding: 10px;
+    background: #2c6a5f;
+    color: white;
+}
+.export-btn {
+    background: #ff9800;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.export-btn:hover {
+    background: #f57c00;
+}

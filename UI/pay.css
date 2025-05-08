@@ -1,0 +1,164 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f4f4f4;
+    text-align: center;
+}
+
+header {
+    background: #2c6a5f;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.back-btn {
+    background: white;
+    color: #ff6f61;
+    padding: 8px 15px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    padding: 6px 10px;
+    border: 2px solid #4CAF50;
+    border-radius: 10px;
+    color: #333;
+    background-color: #e8f5e9;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #c8e6c9;
+    color: #000;
+}
+
+.checkout-container {
+    background: white;
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+    color: #2c6a5f;
+}
+
+.scale-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.fruit-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.fruit-display img {
+    width: 180px;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 3px solid #0b0b0b;
+}
+
+.fruit-details p {
+    font-size: 18px;
+    color: #333;
+}
+
+.customer-info {
+    background: #eafaf1;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+.item-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+tfoot td {
+    font-size: 18px;
+    font-weight: bold;
+    color: #e67e22;
+}
+
+.export-btn {
+    background: #ff9800;
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.export-btn:hover {
+    background: #f57c00;
+}
+
+.payment {
+    margin-top: 20px;
+}
+
+.qr-code {
+    width: 150px;
+    height: 150px;
+}

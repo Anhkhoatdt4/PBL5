@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <title>Orders - BKN Fruits</title>
+    <link rel="stylesheet" href="order.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="image/logo.png" alt="Logo">
+            <span>BKN Fruits</span>
+        </div>
+        <a href="pay.html"><button class="new-order-btn"><i class="fa-solid fa-plus"></i> New Order</button></a>
+        <a href="home.html" class="back-btn">🏠 Home</a>
+    </header>
+
+    <section class="orders">
+        <h2>Your Orders</h2>
+        <div class="order-list">
+            <!-- Hóa đơn #001 -->
+            <div class="order">
+                <div class="order-header">
+                    <p><i class="fa-solid fa-cart-shopping"></i> Hóa đơn #001</p>
+                    <span class="price">150.000 VNĐ</span>
+                </div>
+                <div class="order-body">
+                    <ul>
+                        <li>Táo - 2kg</li>
+                        <li>Chuối - 1.5kg</li>
+                        <li>Nho - 3kg</li>
+                    </ul>
+                </div>
+                <div class="order-footer">
+                    <button class="view-btn" onclick="viewOrder(1)">View Details</button>
+                </div>
+            </div>
+
+            <!-- Hóa đơn #002 -->
+            <div class="order">
+                <div class="order-header">
+                    <p><i class="fa-solid fa-cart-shopping"></i> Hóa đơn #002</p>
+                    <span class="price">180.000 VNĐ</span>
+                </div>
+                <div class="order-body">
+                    <ul>
+                        <li>Dứa - 1kg</li>
+                        <li>Xoài - 2kg</li>
+                        <li>Cam - 2.5kg</li>
+                    </ul>
+                </div>
+                <div class="order-footer">
+                    <button class="view-btn" onclick="viewOrder(2)">View Details</button>
+                </div>
+            </div>
+
+            <!-- Hóa đơn #003 -->
+            <div class="order">
+                <div class="order-header">
+                    <p><i class="fa-solid fa-cart-shopping"></i> Hóa đơn #003</p>
+                    <span class="price">210.000 VNĐ</span>
+                </div>
+                <div class="order-body">
+                    <ul>
+                        <li>Cherry - 1kg</li>
+                        <li>Dưa hấu - 3kg</li>
+                        <li>Táo - 2.5kg</li>
+                    </ul>
+                </div>
+                <div class="order-footer">
+                    <button class="view-btn" onclick="viewOrder(3)">View Details</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; BKN Fruits. Mỗi ngày trái cây, mỗi ngày sức khỏe.</p>
+    </footer>
+    <!-- <div id="neworder" class="neworder">
+        <div class="neworder-content">
+            <h2>Tạo hóa đơn mới</h2>
+            <form>
+                <label for="customerName">Tên khách hàng:</label>
+                <input type="text" id="customerName" required>
+                
+                <label for="orderItems">Sản phẩm:</label>
+                <textarea id="orderItems" required></textarea>
+                
+                <label for="totalPrice">Tổng tiền:</label>
+                <input type="number" id="totalPrice" required>
+                
+                <button type="submit">Tạo hóa đơn</button>
+                <button onclick="closeform()">Hủy</button>
+            </form>
+        </div>
+    </div> -->
+
+    <script>
+        function viewOrder(orderId) {
+            window.location.href = `order_details.html?id=${orderId}`;
+        }
+        function neworder() {
+            document.getElementById("pay").style.display = "block";
+        }
+
+        function closeform() {
+            document.getElementById("neworder").style.display = "none";
+        }
+    </script>
+    </script>
+</body>
+</html>
