@@ -11,7 +11,7 @@ function Sidebar({ onPageChange }: { onPageChange: (page: string) => void }) {
             </div>
             <ul>
                 <SidebarItem icon="fa-chart-bar" text="Thống kê & Báo cáo" page="dashboard" onPageChange={onPageChange} />
-                <SidebarItem icon="fa-box" text="Quản lý sản phẩm" page="product_ad" onPageChange={onPageChange} />
+                <SidebarItem icon="fa-box" text="Quản lý tồn kho" page="product_ad" onPageChange={onPageChange} />
                 <SidebarItem icon="fa-shopping-cart" text="Quản lý đơn hàng" page="order_ad" onPageChange={onPageChange} />
                 <SidebarItem icon="fa-user" text="Quản lý nhân viên" page="staff_ad" onPageChange={onPageChange} />
             </ul>

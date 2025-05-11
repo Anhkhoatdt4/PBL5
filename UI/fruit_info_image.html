@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin Trái cây</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="fruit_info_image.css">
+</head>
+<body>
+    <div class="main-content">
+        <header>
+            <h2>Thông tin Trái cây</h2>
+        </header>
+
+        <div class="top-bar">
+            <div class="actions">
+                <button class="export-btn" style="background-color: #efcaca; border: #efcaca; color: #bf0000;">
+                    <i class="fa-solid fa-file-export"></i> Xuất dữ liệu
+                </button>
+            </div>
+            <div class="search-box" style="margin-right: 20px;">
+                <input type="text" id="searchInput" placeholder="Tìm kiếm đơn hàng...">
+                <i class="fa-solid fa-search"></i>
+            </div>
+        </div>
+
+        <!-- Bảng hiển thị dữ liệu -->
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 30%;">Hình ảnh</th>
+                    <th>Tên</th>
+                    <th>Giá</th>
+                    <th>Cân nặng</th>
+                    <th>Tổng tiền</th>
+                </tr>
+            </thead>
+            <tbody id="orderQueue">
+                <!-- Dữ liệu sẽ được chèn vào đây -->
+            </tbody>
+        </table>
+
+    </div>
+
+    <script src="fruit_info_image.js"></script>
+</body>
+</html>

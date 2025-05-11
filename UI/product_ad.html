@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quản lý Sản phẩm</title>
+    <title>Quản lý tồn kho</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="product_ad.css">
 </head>
+
 <body>
     <div class="main-content">
         <header>
-            <h2>Quản lý sản phẩm</h2>
+            <h2>Quản lý tồn kho</h2>
         </header>
-        
+
         <div class="top-bar">
             <div class="actions">
-                <button class="add-btn" style="background-color: #9df99d; border: #9df99d; color: #003c00;"><i class="fa-solid fa-plus"></i> Thêm sản phẩm</button>
-                <button class="export-btn" style="background-color: #efcaca; border: #efcaca; color: #bf0000;"><i class="fa-solid fa-file-export"></i> Xuất dữ liệu</button>
+                <button class="add-btn" style="background-color: #9df99d; border: #9df99d; color: #003c00;"><i
+                        class="fa-solid fa-plus"></i> Thêm sản phẩm</button>
+                <button class="export-btn" style="background-color: #efcaca; border: #efcaca; color: #bf0000;"><i
+                        class="fa-solid fa-file-export"></i> Xuất dữ liệu</button>
             </div>
             <div class="search-box">
                 <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm...">
@@ -30,40 +34,48 @@
                     <th>ID</th>
                     <th>Tên sản phẩm</th>
                     <th>Giá/kg</th>
-                    <th>Số lượng</th>
-                    <th>Hành động</th>
+                    <th>Số lượng (kg)</th>
+                    <th style="width: 26%;">Hành động</th>
                 </tr>
             </thead>
             <tbody id="productTable">
-                <tr>
-                    <td>1</td>
-                    <td>Táo</td>
-                    <td>50.000đ</td>
-                    <td>100</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="edit-btn"><i class="fa-solid fa-pen"></i></button>
-                            <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Chuối</td>
-                    <td>20.000đ</td>
-                    <td>150</td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="edit-btn"><i class="fa-solid fa-pen"></i></button>
-                            <button class="delete-btn"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
+
             </tbody>
-            
+
         </table>
+
+        <div id="addStockModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2 id="modalTitle" style="margin: 20px;">Cập nhật tồn kho</h2>
+
+                <div>
+                    <img id="productImage" src="" alt="Ảnh sản phẩm"
+                        style="max-width: 250px; max-height: 250px; margin-left: 80px;" />
+                </div>
+
+                <form id="addStockForm">
+                    <div>
+                        <label id="amountLabel" for="amount">Số lượng cần thêm (kg):</label>
+                        <input type="number" id="amount" placeholder="Nhập số lượng" required min="1">
+                    </div>
+
+                    <div id="priceInputContainer" style="display: none;">
+                        <label for="price">Giá mới (VND/kg):</label>
+                        <input type="number" id="price" placeholder="Nhập giá" min="0">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit">Lưu</button>
+                        <button type="button" onclick="closeModal()">Hủy</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
-    
+
     <script src="product_ad.js"></script>
 </body>
+
 </html>

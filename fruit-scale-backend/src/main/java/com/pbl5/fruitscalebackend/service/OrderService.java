@@ -1,10 +1,8 @@
 package com.pbl5.fruitscalebackend.service;
 
 import com.pbl5.fruitscalebackend.dto.OrderRequest;
-import com.pbl5.fruitscalebackend.entity.Order;
-import com.pbl5.fruitscalebackend.entity.OrderItem;
-import com.pbl5.fruitscalebackend.entity.OrderStatus;
-import com.pbl5.fruitscalebackend.entity.User;
+import com.pbl5.fruitscalebackend.entity.*;
+import com.pbl5.fruitscalebackend.repository.InventoryRepository;
 import com.pbl5.fruitscalebackend.repository.OrderRepository;
 import com.pbl5.fruitscalebackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,9 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private InventoryRepository inventoryRepository;
 
     public Order createOrder(OrderRequest request){
         User user = userRepository.findUserByUsername(request.getUserName().toString());
@@ -55,6 +56,24 @@ public class OrderService {
                 .build();
 
         items.forEach(item -> item.setOrder(order));
+
+        for (OrderItem item : items){
+            System.out.println("item " + item);
+            InventoryItem inventoryItem = inventoryRepository.findByFruitName(item.getFruitName());
+            if (inventoryItem != null){
+                System.out.println("inventoryItem " + inventoryItem);
+                double newQuantity = inventoryItem.getQuantityInKg() - item.getWeight();
+                System.out.println("newQuantity " + newQuantity);
+                if (newQuantity < 0) {
+                    throw new RuntimeException("Not enough inventory for item: " + item.getFruitName());
+                }
+                inventoryItem.setQuantityInKg(newQuantity);
+                inventoryItem.setLastUpdated(LocalDateTime.now());
+                inventoryRepository.save(inventoryItem);
+            } else {
+                throw new RuntimeException("Inventory item not found for fruit: " + item.getFruitName());
+            }
+        }
         return orderRepository.save(order);
     }
 

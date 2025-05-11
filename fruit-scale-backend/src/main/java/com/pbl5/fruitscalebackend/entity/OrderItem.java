@@ -2,10 +2,7 @@ package com.pbl5.fruitscalebackend.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -28,6 +25,7 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "order_id")
     @JsonIgnore
+    @ToString.Exclude
     private Order order;
 }
 

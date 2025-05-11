@@ -143,7 +143,7 @@ public class FruitWebSocketHandler extends TextWebSocketHandler {
             Map<String, String> map = new HashMap<>();
             map.put("image_base64", "data:image/jpeg;base64," + base64Image);
             map.put("image_name", latestFile.getName());
-            map.put("fruit_weight", "600 gram");
+            map.put("fruit_weight", "7 kg");
             map.put("fruit_price" , getPriceFromFruitName(getNameFruit(latestFile.getName())));
             ObjectMapper mapper = new ObjectMapper();
             return mapper.writeValueAsString(map);

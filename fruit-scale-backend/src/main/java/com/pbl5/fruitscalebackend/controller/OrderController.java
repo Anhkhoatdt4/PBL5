@@ -1,14 +1,17 @@
 package com.pbl5.fruitscalebackend.controller;
 
 import com.pbl5.fruitscalebackend.dto.OrderRequest;
+import com.pbl5.fruitscalebackend.entity.InventoryItem;
 import com.pbl5.fruitscalebackend.entity.Order;
 import com.pbl5.fruitscalebackend.entity.User;
+import com.pbl5.fruitscalebackend.repository.InventoryRepository;
 import com.pbl5.fruitscalebackend.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,6 +22,7 @@ import java.util.UUID;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
 
     @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody OrderRequest request) {
