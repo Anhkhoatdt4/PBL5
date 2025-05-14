@@ -34,9 +34,9 @@ async function loadProducts() {
 
       tableBody.appendChild(tr);
 
-      if (lowStock) {
-        alert(`⚠️ Cảnh báo: ${item.fruitName} sắp hết hàng! Chỉ còn ${item.quantityInKg}kg`);
-      }
+      // if (lowStock) {
+      //   alert(`⚠️ Cảnh báo: ${item.fruitName} sắp hết hàng! Chỉ còn ${item.quantityInKg}kg`);
+      // }
     });
   } catch (error) {
     console.error("Lỗi khi load tồn kho:", error);

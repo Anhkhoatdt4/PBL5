@@ -9,11 +9,16 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class InventoryService {
     @Autowired
     InventoryRepository inventoryRepository;
+
+    @Autowired
+    private EmailService emailService;
+
     @PostConstruct
     public void seedInitialInventory() {
         addIfNotExists("Apples", 100, 35000);
@@ -41,6 +46,15 @@ public class InventoryService {
         InventoryItem item = inventoryRepository.findByFruitName(fruitName);
         item.setQuantityInKg(item.getQuantityInKg() + amount);
         item.setLastUpdated(LocalDateTime.now());
+        List<InventoryItem> inventoryItemList = inventoryRepository.findAll();
+        List<InventoryItem> lowStockItems = inventoryItemList.stream()
+                .filter(item1 -> item1.getQuantityInKg() < 10)
+                .collect(Collectors.toList());
+        lowStockItems.stream().forEach(item2 -> System.out.println(item2));
+        if (!lowStockItems.isEmpty()){
+            String recipientEmail = "vietnhan033@gmail.com";
+            emailService.sendLowStockEmail(recipientEmail, lowStockItems);
+        }
         inventoryRepository.save(item);
         return inventoryRepository.findByFruitName(fruitName);
     }
@@ -57,4 +71,5 @@ public class InventoryService {
         inventoryRepository.save(item);
         return inventoryRepository.findByFruitName(fruitName);
     }
+// http://localhost:8080/api/email/test?toEmail=your-email@example.com&fruitName=Mango&quantity=5
 }

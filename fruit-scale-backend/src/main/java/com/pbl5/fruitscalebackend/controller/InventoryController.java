@@ -37,8 +37,6 @@ public class InventoryController {
         return ResponseEntity.ok(item);
     }
 
-
-
     @GetMapping
     public List<InventoryItem> getAllInventory() {
         return inventoryService.getAllInventoryItems();
