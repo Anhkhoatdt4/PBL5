@@ -162,3 +162,17 @@ tfoot td {
     width: 150px;
     height: 150px;
 }
+
+.button-createqr{
+    width: 100px;
+    padding: 10px;
+    font-size: 14px;
+    border: 2px solid #fafafa;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.button-createqr:hover {
+    background-color: #1c1b1b;
+    color: white;
+    cursor: pointer;
+}

@@ -166,14 +166,14 @@
                 const phoneText = document.getElementById('customerPhone').value.trim();
                 console.log(orderQueueTest.textContent);
 
-                if (!orderQueueTest) {
-                    alert('Vui lòng nhập tên khách hàng!');
-                    return;
-                }
-                if (!phoneText) {
-                    alert('Vui lòng nhập số điện thoại!');
-                    return;
-                }
+                // if (!orderQueueTest) {
+                //     alert('Vui lòng nhập tên khách hàng!');
+                //     return;
+                // }
+                // if (!phoneText) {
+                //     alert('Vui lòng nhập số điện thoại!');
+                //     return;
+                // }
 
                 // rowsBE.forEach((row, index) => {
                 //     const cells = row.querySelectorAll("td");
@@ -256,7 +256,11 @@
                 // Tạo danh sách mặt hàng
                 const orderQueue = document.getElementById("order-queue");
                 const rows = orderQueue.querySelectorAll("tr");
-
+            
+                if (rows.length === 0) {
+                    alert('Vui lòng có ít nhất một mặt hàng để xuất hóa đơn!');
+                    return;
+                }
                 const items = [];
 
                 rows.forEach((row, index) => {

@@ -73,17 +73,19 @@
                     return;
                 }
 
-                orders.forEach(order => {
+                orders.forEach((order, index) => {
                     const orderDiv = document.createElement("div");
                     orderDiv.classList.add("order-item");
-
+                    orderDiv.style.border = "width: 80%";
                     const detailId = `details-${order.id}`;
+                    // Đánh số thứ tự hiển thị từ 001, 002, ...
+                    const displayOrderNumber = (index + 1).toString().padStart(3, '0');
 
                     orderDiv.innerHTML = `
                 <div style="margin-bottom: 10px;">
-                    <h3>Đơn hàng #${order.id}</h3>
-                    <p>Ngày: ${new Date(order.createdAt).toLocaleDateString()}</p>
-                    <p>Tổng tiền: ${order.totalPrice.toLocaleString()} đ</p>
+                    <h3>Đơn hàng #${displayOrderNumber}</h3>
+                    <p>Ngày đặt: ${new Date(order.createdAt).toLocaleDateString()}</p>
+                    <p style="font-weight:bold;">Tổng tiền: ${order.totalPrice.toLocaleString()} đ</p>
                     <button onclick="toggleDetails('${detailId}', '${encodeURIComponent(JSON.stringify(order.items))}')">Xem chi tiết</button>
                     <div id="${detailId}" style="display:none; margin-top: 10px;"></div>
                 </div>
