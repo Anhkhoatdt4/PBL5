@@ -16,6 +16,7 @@ body {
     font-size: 20px;
     font-weight: bold;
     color: white;
+    margin-right: 40px;
 }
 .logo img{
     width: 40px;
@@ -24,22 +25,27 @@ body {
 
 header {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* căn giữa header */
     align-items: center;
     padding: 15px 50px;
     background: #2c6a5f;
     color: white;
+    position: relative;
 }
 
-.logo {
-    font-size: 24px;
-    font-weight: bold;
+nav {
+    flex: 1;
+    display: flex;
+    justify-content: center; 
+    margin-right: 180px;
 }
 
 nav ul {
     list-style: none;
     display: flex;
     gap: 20px;
+    justify-content: center;
+    align-items: center;
 }
 
 nav ul li {
@@ -52,12 +58,16 @@ nav ul li a {
     font-size: 16px;
 }
 .message {
-    position: absolute;
     font-size: 24px;
     cursor: pointer;
     padding: 5px 10px;
     display: flex;
-    margin-left: 1250px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 120px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .message span {
@@ -70,11 +80,18 @@ nav ul li a {
     top: -5px;
     right: -5px;
 }
-.user{
+.user {
     position: absolute;
-    margin-left: 1310px;
+    right: 60px;
+    top: 50%;
+    transform: translateY(-50%);
 }
+
 .login-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
     background: white;
     color: #2c6a5f;
     padding: 8px 15px;
@@ -167,30 +184,90 @@ nav ul li a {
     background: white;
 }
 
-.about h2, .contact h2 {
-    color: #2c6a5f;
+.about {
+    background: linear-gradient(90deg, #f0f8ff 0%, #e0e7ff 100%);
+    border-radius: 18px;
+    padding: 32px 24px 24px 24px;
+    margin: 40px 0 32px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.about h2 {
+    color: #2a9d8f;
+    font-size: 2.2rem;
+    margin-bottom: 18px;
+    font-weight: 700;
+}
+.about ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 18px 0;
+}
+.about ul li {
+    font-size: 1.1rem;
+    margin: 8px 0;
+    color: #333;
+    position: relative;
+    padding-left: 24px;
+}
+.about ul li:before {
+    content: '\2714';
+    color: #43b324;
+    position: absolute;
+    left: 0;
+    font-size: 1.1rem;
+}
+.about p {
+    color: #444;
+    font-size: 1.05rem;
     margin-bottom: 10px;
 }
 
-.about ul {
-    list-style: none;
-    text-align: left;
-    max-width: 500px;
-    margin: 0 auto;
+.contact {
+    background: linear-gradient(90deg, #e0f7fa 0%, #fceabb 100%);
+    border-radius: 18px;
+    padding: 32px 24px 24px 24px;
+    margin: 0 0 40px 0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
-
-.about ul li {
-    font-size: 18px;
-    margin: 5px 0;
+.contact h2 {
+    color: #f9a825;
+    font-size: 2.2rem;
+    margin-bottom: 18px;
+    font-weight: 700;
 }
-
 .contact-info {
-    margin-top: 20px;
+    margin-top: 18px;
+}
+.contact-info p {
+    font-size: 1.08rem;
+    color: #333;
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.contact-info i {
+    color: #2a9d8f;
+    font-size: 1.1rem;
 }
 
-.contact-info p {
-    font-size: 16px;
-    color: #333;
+@media (max-width: 700px) {
+    .about, .contact {
+        padding: 18px 6px 12px 6px;
+        max-width: 98vw;
+    }
+    .about h2, .contact h2 {
+        font-size: 1.3rem;
+    }
 }
 
 footer {

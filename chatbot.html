@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chatbot Đơn Giản</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+  <link rel="stylesheet" href="chatbot.css">
+  <style>
+    #chatbot-container {
+      background: #fff;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.18);
+      border-radius: 16px;
+      max-width: 370px;
+      width: 100%;
+      min-height: 540px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      /* Đảm bảo nền trắng và không bị trong suốt khi nhúng iframe */
+    }
+    #chatbot-header {
+      background: linear-gradient(90deg, #30645a 0%, #4e54c8 100%);
+      color: #fff;
+      padding: 14px 18px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    #chatbot-messages {
+      flex: 1 1 auto;
+      overflow-y: auto;
+      padding: 16px 12px;
+      background: #f7f8fa;
+    }
+    #chatbot-input-area {
+      background: #f7f8fa;
+      padding: 12px 10px 10px 10px;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      display: flex;
+      gap: 8px;
+    }
+    #userInput {
+      flex: 1 1 auto;
+      border-radius: 8px;
+      border: 1px solid #d1d5db;
+      padding: 8px 12px;
+      font-size: 1rem;
+      outline: none;
+      background: #fff;
+    }
+    #sendBtn {
+      background: linear-gradient(90deg, #30645a 0%, #4e54c8 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 0 18px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    #sendBtn:hover {
+      background: linear-gradient(90deg, #4e54c8 0%, #30645a 100%);
+    }
+    .chatbot-message {
+      display: flex;
+      align-items: flex-end;
+      margin-bottom: 10px;
+    }
+    .chatbot-message.user {
+      justify-content: flex-end;
+    }
+    .chatbot-message.bot {
+      justify-content: flex-start;
+    }
+    .chatbot-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #e0e7ef;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin: 0 8px;
+    }
+    .chatbot-message .chatbot-bubble {
+      max-width: 220px;
+      padding: 10px 14px;
+      border-radius: 16px;
+      font-size: 1rem;
+      line-height: 1.5;
+      background: #f0f4fa;
+      color: #222;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      word-break: break-word;
+    }
+    .chatbot-message.user .chatbot-bubble {
+      background: #4e54c8;
+      color: #fff;
+      border-bottom-right-radius: 4px;
+    }
+    .chatbot-message.bot .chatbot-bubble {
+      background: #f0f4fa;
+      color: #222;
+      border-bottom-left-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="chatbot-container">
+    <div id="chatbot-header">
+      <i class="fa-solid fa-robot"></i> Chatbot BKN Fruits
+    </div>
+    <div id="chatbot-messages"></div>
+    <div id="chatbot-input-area">
+      <input type="text" id="userInput" placeholder="Nhập yêu cầu..." onkeydown="if(event.key==='Enter'){sendMessage()}" />
+      <button id="sendBtn" onclick="sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+    </div>
+  </div>
+  <script type="module">
+    import { fetchPriceList, fetchPriceByName, getFruitListReply, getHistoryReply, getPurchaseReply, getDefaultReply } from './chatbot.logic.js';
+    const messagesDiv = document.getElementById('chatbot-messages');
+
+    function appendMessage(text, sender) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = 'chatbot-message ' + sender;
+      let avatar = '';
+      if(sender === 'user') {
+        avatar = '<div class="chatbot-avatar"><i class="fa-solid fa-user"></i></div>';
+        msgDiv.innerHTML = `<div class="chatbot-bubble">${text}</div>${avatar}`;
+      } else {
+        avatar = '<div class="chatbot-avatar"><i class="fa-solid fa-robot"></i></div>';
+        msgDiv.innerHTML = `${avatar}<div class="chatbot-bubble">${text}</div>`;
+      }
+      messagesDiv.appendChild(msgDiv);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
+    
+    // Hàm sendMessage mới đã dùng import module, không cần định nghĩa lại các hàm logic ở đây nữa.
+    async function sendMessage() {
+      const input = document.getElementById('userInput');
+      const message = input.value.trim();
+      if(!message) return;
+      appendMessage(message, 'user');
+      input.value = '';
+      const lowerMsg = message.toLowerCase();
+      let reply;
+      // Đặt fruitKeywords lên đầu để mọi nhánh đều dùng được
+      const fruitKeywords = [
+        { key: ['táo','apple'], name: 'apples' },
+        { key: ['chuối','banana'], name: 'bananas' },
+        { key: ['nho','grape'], name: 'grapes' },
+        { key: ['cam','orange'], name: 'oranges' },
+        { key: ['dâu','dâu tây','strawberry'], name: 'strawberries' },
+        { key: ['dưa hấu','watermelon'], name: 'watermelons' },
+        { key: ['thơm','dứa','pineapple'], name: 'pineapples' },
+        { key: ['cà chua','tomato'], name: 'tomatoes' }
+      ];
+      // Thêm nhận diện các câu hỏi về liên hệ, hỗ trợ, hotline, số điện thoại, email, v.v.
+      if (lowerMsg.includes('liên hệ') || lowerMsg.includes('liên lạc') || lowerMsg.includes('hỗ trợ') || lowerMsg.includes('hotline') || lowerMsg.includes('số điện thoại') || lowerMsg.includes('gọi') || lowerMsg.includes('email')) {
+        reply = '📞 Bạn có thể liên hệ gấp với BKN Fruits qua hotline <b>0774488418</b> hoặc email <b>baosupport@bknfruits.vn</b>. Chúng tôi luôn sẵn sàng hỗ trợ bạn!';
+      } else if (lowerMsg.includes('mở cửa') || lowerMsg.includes('giờ mở cửa') || lowerMsg.includes('giờ làm việc') || lowerMsg.includes('mấy giờ') || lowerMsg.includes('open')) {
+        reply = '⏰ BKN Fruits mở cửa từ <b>7:00</b> đến <b>21:00</b> tất cả các ngày trong tuần.';
+      } else if (lowerMsg.includes('địa chỉ') || lowerMsg.includes('ở đâu') || lowerMsg.includes('chỉ đường') || lowerMsg.includes('map')) {
+        reply = '📍 Địa chỉ cửa hàng: <b>54 Nguyễn Lương Bằng, Liên Chiểu, Đà Nẵng</b>. Bạn có thể tìm trên Google Maps với từ khóa "BKN Fruits".';
+      } else if (lowerMsg.includes('ship') || lowerMsg.includes('giao hàng') || lowerMsg.includes('vận chuyển')) {
+        reply = '🚚 BKN Fruits hỗ trợ giao hàng tận nơi trong nội thành TP.ĐN. Vui lòng để lại địa chỉ và số điện thoại để được phục vụ nhanh nhất!';
+      } else if (lowerMsg.includes('thanh toán') || lowerMsg.includes('qr') || lowerMsg.includes('chuyển khoản')) {
+        reply = '💳 Bạn có thể thanh toán bằng tiền mặt, chuyển khoản hoặc quét mã QR tại cửa hàng.';
+      } else if (lowerMsg.includes('giá')) {
+        let found = false;
+        for (const fruit of fruitKeywords) {
+          for (const k of fruit.key) {
+            if (lowerMsg.includes(k)) {
+              reply = await fetchPriceByName(fruit.name);
+              found = true;
+              break;
+            }
+          }
+          if (found) break;
+        }
+        if (!found) reply = await fetchPriceList();
+      } else if (lowerMsg.includes('loại') || lowerMsg.includes('loại trái cây') || lowerMsg.includes('trái cây')) {
+        reply = getFruitListReply();
+      } else if (lowerMsg.includes('lịch sử')) {
+        reply = getHistoryReply();
+      } else if (lowerMsg.includes('mua') || lowerMsg.includes('đặt hàng')) {
+        reply = getPurchaseReply();
+      } else {
+        reply = getDefaultReply();
+      }
+      appendMessage(reply, 'bot');
+    }
+    // Đảm bảo hàm sendMessage là global để HTML gọi được
+    window.sendMessage = sendMessage;
+  </script>
+</body>
+</html>

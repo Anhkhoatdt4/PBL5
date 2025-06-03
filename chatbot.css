@@ -1,0 +1,116 @@
+body {
+  background: #f0f4f8;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+#chatbot-container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  width: 370px;
+  max-width: 95vw;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#chatbot-header {
+  background: linear-gradient(90deg, #2a9d8f 0%, #43b324 100%);
+  color: #fff;
+  padding: 18px 20px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#chatbot-messages {
+  flex: 1;
+  padding: 18px 12px;
+  background: #f7fafc;
+  overflow-y: auto;
+  min-height: 220px;
+  max-height: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.chatbot-message {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+}
+.chatbot-message.user {
+  justify-content: flex-end;
+}
+.chatbot-message.bot {
+  justify-content: flex-start;
+}
+.chatbot-bubble {
+  padding: 10px 16px;
+  border-radius: 18px;
+  max-width: 70%;
+  font-size: 1rem;
+  line-height: 1.4;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.chatbot-message.user .chatbot-bubble {
+  background: #2a9d8f;
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+.chatbot-message.bot .chatbot-bubble {
+  background: #e0f7fa;
+  color: #222;
+  border-bottom-left-radius: 4px;
+}
+.chatbot-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+#chatbot-input-area {
+  display: flex;
+  border-top: 1px solid #e0e0e0;
+  background: #fafbfc;
+  padding: 10px 12px;
+  gap: 8px;
+}
+#userInput {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 16px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+}
+#userInput:focus {
+  border: 1.5px solid #2a9d8f;
+}
+#sendBtn {
+  background: #2a9d8f;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+#sendBtn:hover {
+  background: #21867a;
+}
