@@ -28,7 +28,7 @@ header {
     justify-content: center; /* căn giữa header */
     align-items: center;
     padding: 15px 50px;
-    background: #2c6a5f;
+    background: #3366ff;
     color: white;
     position: relative;
 }
@@ -93,7 +93,7 @@ nav ul li a {
     top: 50%;
     transform: translateY(-50%);
     background: white;
-    color: #2c6a5f;
+    color: #3366ff;
     padding: 8px 15px;
     border-radius: 20px;
     text-decoration: none;
@@ -157,7 +157,7 @@ nav ul li a {
     padding: 10px 15px;
     font-size: 18px;
     border: none;
-    background: #2c6a5f;
+    background: #3366ff;
     color: white;
     cursor: pointer;
     margin: 5px;
@@ -271,7 +271,7 @@ nav ul li a {
 }
 
 footer {
-    background: #2c6a5f;
+    background: #3366ff;
     color: white;
     padding: 40px 20px;
     text-align: center;
@@ -349,7 +349,7 @@ footer {
     width: 100%;
     border: none;
     height: 2px;
-    background-color: #2c6a5f;
+    background-color: #3366ff;
     opacity: 0.8;
 }
 

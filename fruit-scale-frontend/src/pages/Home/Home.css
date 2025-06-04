@@ -23,7 +23,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 15px 50px;
-    background: #2c6a5f;
+    background: #3366ff;
     color: white;
     position: sticky;
     top: 0;
@@ -88,7 +88,7 @@
 
 .login-btn {
   background: white;
-  color: #2c6a5f;
+  color: #3366ff;
   padding: 8px 15px;
   border-radius: 20px;
   text-decoration: none;
@@ -103,7 +103,7 @@
   
   .products h2 {
     margin-bottom: 20px;
-    color: #2c6a5f;
+    color: #3366ff;
   }
   
   .product-container {
@@ -159,7 +159,7 @@
     padding: 10px 15px;
     font-size: 18px;
     border: none;
-    background: #2c6a5f;
+    background: #3366ff;
     color: white;
     cursor: pointer;
     margin: 5px;
@@ -178,7 +178,7 @@
   }
   
   .about h2 {
-    color: #2c6a5f;
+    color: #3366ff;
     margin-bottom: 10px;
   }
   
@@ -201,7 +201,7 @@
   }
   
   .contact h2 {
-    color: #2c6a5f;
+    color: #3366ff;
     margin-bottom: 10px;
   }
   
@@ -213,7 +213,7 @@
   
   /* Footer */
   footer {
-    background: #2c6a5f;
+    background: #3366ff;
     color: white;
     padding: 40px 20px;
     text-align: center;

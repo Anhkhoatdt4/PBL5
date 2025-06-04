@@ -87,7 +87,7 @@ table th, table td {
 }
 
 table th {
-    background: linear-gradient(45deg, #4caf50, #81c784);
+    background: linear-gradient(45deg, #3366ff, #5a8dee);
     color: white;
     font-weight: bold;
 }

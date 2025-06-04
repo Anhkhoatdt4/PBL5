@@ -63,7 +63,7 @@ h2 {
 
 .google-btn {
     background: white;
-    color: #2c6a5f;
+    color: #3366ff;
     padding: 8px 20px;
     border: none;
     border-radius: 20px;
@@ -155,7 +155,7 @@ input[type="checkbox"] {
     text-decoration: none;
     margin-left: 5px;
     padding: 5px 10px;
-    background: #2c6a5f;
+    background: #3366ff;
     border-radius: 10px;
     transition: background 0.3s ease-in-out;
 }

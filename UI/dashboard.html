@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
     <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
@@ -15,19 +15,19 @@
             <div class="stat-box">
                 <div class="stat-card green">
                     <i class="fa-solid fa-tag"></i>
-                    <p><strong>1234</strong> Sản phẩm</p>
+                    <p><strong id="stat-products">...</strong> Sản phẩm</p>
                 </div>
                 <div class="stat-card blue">
                     <i class="fa-solid fa-box"></i>
-                    <p><strong>1234</strong> Đơn hàng</p>
+                    <p><strong id="stat-orders">...</strong> Đơn hàng</p>
                 </div>
                 <div class="stat-card orange">
                     <i class="fa-solid fa-money-bill-1"></i>
-                    <p><strong>$200,000</strong> Thu nhập</p>
+                    <p><strong id="stat-revenue">...</strong> Thu nhập</p>
                 </div>
                 <div class="stat-card red">
                     <i class="fa-solid fa-triangle-exclamation"></i>
-                    <p><strong>2</strong> Hết hàng</p>
+                    <p><strong id="stat-outofstock">...</strong> Hết hàng</p>
                 </div>
             </div>
         </div>
@@ -45,28 +45,41 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>3204</td>
-                        <td>Táo</td>
-                        <td>40.000đ</td>
-                        <td>Đ</td>
+                        <td>e759165d-4ff0-426c-a289-5b2e5604aec4</td>
+                        <td>Apples</td>
+                        <td>35.000đ</td>
+                        <td>Sản phẩm</td>
                     </tr>
                 </tbody>
             </table>
         </div>
         
         <div class="chart-container">
-            <div class="chart-box">
+             <div style="flex: 1; display: flex; flex-direction: row;">
+                <div class="chart-box">
                 <h2>Biểu đồ doanh số</h2>
                 <canvas id="chart1"></canvas>
-            </div>
-            <div class="chart-box">
-                <h2>Thống kê đơn hàng</h2>
-                <canvas id="chart2"></canvas>
-            </div>
+                </div>
+                <div class="chart-box">
+                    <h2>Thống kê đơn hàng</h2>
+                    <canvas id="chart2" style="margin-left: 200px;"></canvas>
+                </div>
+
+             </div>
+            
+             <div style="flex: 1; display: flex; flex-direction: row;">
+                <div class="chart-box">
+                    <h2>Biểu đồ đơn hàng</h2>
+                    <canvas id="chart3"></canvas>
+                </div>
+                <div class="chart-box">
+                    <h2>Biểu đồ hàng tồn kho</h2>
+                    <canvas id="chart4"></canvas>
+                </div>
+            </div>    
         </div>
     </div>
     
-    <script>
-    </script>
+
 </body>
 </html>

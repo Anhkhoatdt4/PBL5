@@ -11,15 +11,18 @@ body {
 }
 
 .sidebar {
-    width: 260px;
-    background: #2c6a5f;
-    color: white;
+    width: 270px;
+    background: #fff;
+    color: #222;
     height: 100vh;
     padding: 20px 0;
     position: fixed;
     display: flex;
     flex-direction: column;
     align-items: center;
+    border-right: 1px solid rgba(0, 0, 0, 0.12);
+    font-weight: 600;
+    font-size: 16px;
 }
 
 .admin-info {
@@ -40,38 +43,51 @@ body {
     list-style-type: none;
 }
 .sidebar ul {
+    border-top: 2px solid rgba(9, 9, 9, 0.3);
     list-style: none;
     width: 100%;
     padding: 0;
 }
 
 .sidebar ul li {
-    padding: 15px;
+    padding: 22px 30px;
     display: flex;
     align-items: center;
     gap: 12px;
     transition: 0.3s;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     cursor: pointer;
+    color: #222;
+    background: transparent;
 }
 
 .sidebar ul li a {
-    color: white;
+    color: #222;
     text-decoration: none;
     width: 100%;
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .sidebar ul li:hover {
-    background: #1e4d45;
+    background: #e6f0ff;
+    color: #3366ff;
 }
+
+.sidebar ul li:hover a {
+    color: #3366ff;
+}
+
 .sidebar ul li.active {
-    background: #1a5442;
+    background: #e6f0ff;
+    color: #3366ff;
     font-weight: bold;
-    border-left: 5px solid #ffcc00;
+    border-left: 4px solid #3366ff;
+}
+.sidebar ul li.active a {
+    color: #3366ff;
 }
 
 .main-content {
@@ -84,7 +100,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #2c6a5f;
+    background: linear-gradient(45deg, #3366ff, #5a8dee);
     color: white;
     padding: 15px 20px;
     border-radius: 5px;
@@ -93,7 +109,7 @@ header {
 
 .logout-btn {
     background: white;
-    color: #2c6a5f;
+    color: rgb(51, 102, 255);
     padding: 8px 15px;
     border-radius: 5px;
     text-decoration: none;

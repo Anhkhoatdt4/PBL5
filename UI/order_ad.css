@@ -77,7 +77,7 @@ table th, table td {
 }
 
 table th {
-    background: #4CAF50;
+    background: linear-gradient(45deg, #3366ff, #5a8dee);
     color: white;
 }
 

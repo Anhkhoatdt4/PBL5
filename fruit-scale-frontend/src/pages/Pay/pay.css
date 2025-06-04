@@ -12,7 +12,7 @@ body {
 }
 
 header {
-    background: #2c6a5f;
+    background: #3366ff;
     color: white;
     padding: 15px;
     display: flex;
@@ -50,7 +50,7 @@ header {
 }
 
 h2 {
-    color: #2c6a5f;
+    color: #3366ff;
 }
 
 .scale-section {

@@ -7,6 +7,7 @@
     <title>Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="admin.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
@@ -14,18 +15,16 @@
     <div class="sidebar">
         <div class="admin-info">
             <img src="https://i.pinimg.com/originals/78/46/75/7846752cfd7b02455fa07c42a5ab2f37.jpg">
-            <p>Kong Bẻo</p>
+            <p>Công Bảo</p>
             <li>Chào mừng bạn trở lại</li>
         </div>
-        <ul>
+        <ul style="margin: 10px;">
             <li><a href="#" onclick="loadPage('dashboard'); return false;"><i class="fa-solid fa-chart-bar"></i> Thống
                     kê & Báo cáo</a></li>
             <li><a href="#" onclick="loadPage('product_ad'); return false;"><i class="fa-solid fa-box"></i> Quản lý tồn
                     kho</a></li>
             <li><a href="#" onclick="loadPage('order_ad'); return false;"><i class="fa-solid fa-shopping-cart"></i> Quản
                     lý đơn hàng</a></li>
-            <li><a href="#" onclick="loadPage('staff_ad'); return false;"><i class="fa-solid fa-user"></i> Quản lý nhân
-                    viên</a></li>
             <li><a href="#" onclick="loadPage('fruit_info_image'); return false;"><i class="fa-solid fa-user"></i> Quản lý thử
                     nghiệm AI</a></li>
         </ul>
@@ -63,10 +62,19 @@
             return urlParams.get(param);
         }
 
+        function setActiveSidebar(page) {
+            const sidebarLinks = document.querySelectorAll('.sidebar ul li');
+            sidebarLinks.forEach(li => li.classList.remove('active'));
+            if (page === 'dashboard') sidebarLinks[0].classList.add('active');
+            else if (page === 'product_ad') sidebarLinks[1].classList.add('active');
+            else if (page === 'order_ad') sidebarLinks[2].classList.add('active');
+            else if (page === 'fruit_info_image') sidebarLinks[3].classList.add('active');
+        }
+
         function loadPage(page) {
             let content = document.getElementById('content');
             content.innerHTML = '<p>Đang tải...</p>';
-
+            setActiveSidebar(page);
             fetch(page + '.html')
                 .then(response => response.text())
                 .then(data => {
@@ -92,12 +100,19 @@
                         script.onload = () => loadStaffs();
                         document.body.appendChild(script);
                     }
-                    else if (page === 'ai_ad') {
-                        console.log("Loading ai_ad.js");
+                    else if (page === 'dashboard') {
+                        console.log("Loading dashboard.js");
                         const script = document.createElement("script");
-                        script.src = "ai_ad.js";
                         script.onload = () => loadAI();
                         document.body.appendChild(script);
+
+                        // After loading dashboard, fetch and render stat cards
+                        setTimeout(() => {
+                            if (typeof renderDashboardStats === 'function') {
+                                renderDashboardStats();
+                            }
+                            renderBestSellerTableInDashboard();
+                        }, 300);
                     }
                     else if (page === 'fruit_info_image') {
                         console.log("Loading fruit_info_image.html");
@@ -105,6 +120,20 @@
                         script.src = "fruit_info_image.js";
                         script.onload = () => loadFruitData();
                         document.body.appendChild(script);
+                    }
+                    // Vẽ biểu đồ nếu là dashboard
+                    if (page === 'dashboard') {
+                        // Đảm bảo Chart.js đã được load trong dashboard.html
+                        setTimeout(() => {
+                            if (typeof fetchDashboardData === 'function') {
+                                fetchDashboardData().then(({ salesData, ordersData }) => {
+                                    if (typeof renderSalesChart === 'function' && typeof renderOrdersChart === 'function') {
+                                        renderSalesChart(salesData);
+                                        renderOrdersChart(ordersData);
+                                    }
+                                });
+                            }
+                        }, 300);
                     }
                 })
                 .catch(error => {
@@ -118,6 +147,250 @@
         loadPage(page);
 
 
+    </script>
+
+        <script>
+    // Vẽ biểu đồ doanh số (chart1) và thống kê đơn hàng (chart2) bằng Chart.js, fetch dữ liệu từ backend
+    async function fetchDashboardData() {
+        const res = await fetch('http://localhost:8080/api/orders');
+        const orders = await res.json();
+        console.log('Orders data:', orders);
+
+        // Biểu đồ doanh số: tổng doanh thu theo ngày (YYYY-MM-DD)
+        const salesByDate = {};
+        orders.forEach(order => {
+            const date = order.createdAt ? order.createdAt.slice(0, 10) : 'Không xác định';
+            salesByDate[date] = (salesByDate[date] || 0) + (order.totalPrice || 0);
+        });
+        const salesLabels = Object.keys(salesByDate).sort();
+        const salesValues = salesLabels.map(date => salesByDate[date]);
+        const salesData = { labels: salesLabels, values: salesValues };
+
+        // Biểu đồ đơn hàng: đếm số đơn theo trạng thái
+        const statusCount = {};
+        orders.forEach(order => {
+            const status = order.status || 'Khác';
+            statusCount[status] = (statusCount[status] || 0) + 1;
+        });
+        const orderLabels = Object.keys(statusCount);
+        const orderValues = orderLabels.map(status => statusCount[status]);
+        const ordersData = { labels: orderLabels, values: orderValues };
+
+        // Biểu đồ số đơn hàng theo ngày
+        const orderCountByDate = {};
+        orders.forEach(order => {
+            const date = order.createdAt ? order.createdAt.slice(0, 10) : 'Không xác định';
+            orderCountByDate[date] = (orderCountByDate[date] || 0) + 1;
+        });
+        const orderDateLabels = Object.keys(orderCountByDate).sort();
+        const orderDateValues = orderDateLabels.map(date => orderCountByDate[date]);
+        const ordersByDateData = { labels: orderDateLabels, values: orderDateValues };
+
+        // Biểu đồ tồn kho: fetch inventory
+        let inventoryData = { labels: [], values: [] };
+        try {
+            const invRes = await fetch('http://localhost:8080/api/inventory');
+            const inventory = await invRes.json();
+            inventoryData.labels = inventory.map(item => item.fruitName);
+            inventoryData.values = inventory.map(item => item.quantityInKg || 0);
+        } catch (e) {
+            console.error('Lỗi khi tải tồn kho:', e);
+        }
+
+        return { salesData, ordersData, ordersByDateData, inventoryData };
+    }
+
+    function renderSalesChart(data) {
+        const ctx = document.getElementById('chart1').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: data.labels, // ['T1','T2',...]
+                datasets: [{
+                    label: 'Doanh số (VNĐ)',
+                    data: data.values, // [10000, 20000, ...]
+                    borderColor: '#3366ff',
+                    backgroundColor: 'rgba(51,102,255,0.08)',
+                    fill: true,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    }
+
+    function renderOrdersChart(data) {
+        const ctx = document.getElementById('chart2').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: data.labels, // ['Đã giao', 'Đang xử lý', ...]
+                datasets: [{
+                    data: data.values, // [10, 5, ...]
+                    backgroundColor: ['#3366ff','#4caf50','#ff9800','#e91e63','#9c27b0','#ffeb3b','#607d8b'],
+                    borderWidth: 1,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' },
+                    title: { display: false , 
+                        
+                     }
+                }
+            }
+        });
+    }
+
+    function renderOrdersByDateChart(data) {
+        const ctx = document.getElementById('chart3').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Số đơn hàng',
+                    data: data.values,
+                    backgroundColor: '#3366ff',
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    }
+
+    function renderInventoryChart(data) {
+        const ctx = document.getElementById('chart4').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [{
+                    label: 'Tồn kho (kg)',
+                    data: data.values,
+                    backgroundColor: ['#c4ad1a', '#f7d358', '#43b324', '#f9a602', '#ffe066', '#b2d430', '#f6e58d'],
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    }
+
+    async function renderDashboardStats() {
+        // Fetch products
+        let productCount = 0;
+        let outOfStock = 0;
+    
+        // Fetch orders and revenue
+        let orderCount = 0;
+        let totalRevenue = 0;
+        try {
+            const res = await fetch('http://localhost:8080/api/orders');
+            const orders = await res.json();
+            orderCount = orders.length;
+            totalRevenue = orders.reduce((sum, o) => sum + (o.totalPrice || 0), 0);
+        } catch (e) { orderCount = 'Lỗi'; totalRevenue = 'Lỗi'; }
+
+        // Fetch inventory for out-of-stock
+        try {
+            const res = await fetch('http://localhost:8080/api/inventory');
+            const inventory = await res.json();
+            productCount = inventory.length;
+            outOfStock = inventory.filter(item => (item.quantityInKg || 0) === 0).length;
+        } catch (e) { outOfStock = 'Lỗi'; }
+
+        if(document.getElementById('stat-products'))
+            document.getElementById('stat-products').textContent = productCount;
+        if(document.getElementById('stat-orders'))
+            document.getElementById('stat-orders').textContent = orderCount;
+        if(document.getElementById('stat-revenue'))
+            document.getElementById('stat-revenue').textContent = typeof totalRevenue === 'number' ? totalRevenue.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'}) : totalRevenue;
+        if(document.getElementById('stat-outofstock'))
+            document.getElementById('stat-outofstock').textContent = outOfStock;
+    }
+
+    function renderBestSellerTableInDashboard() {
+        // Wait for the dashboard's table to be present
+        const tbody = document.getElementById('bestseller-tbody');
+        if (!tbody) {
+            setTimeout(renderBestSellerTableInDashboard, 200);
+            return;
+        }
+        fetch('http://localhost:8080/api/orders')
+            .then(res => res.json())
+            .then(orders => {
+                const productSales = {};
+                orders.forEach(order => {
+                    (order.items || []).forEach(item => {
+                        const id = item.productId || item.id;
+                        if (!productSales[id]) {
+                            productSales[id] = {
+                                id: "e759165d-4ff0-426c-a289-5b2e5604aec4",
+                                name: item.fruit_name || item.name || 'Apples',
+                                price: item.pricePerKg || item.price || 0,
+                                category: item.category || '',
+                                sold: 0
+                            };
+                        }
+                        productSales[id].sold += item.quantity || 0;
+                    });
+                });
+                const bestSellers = Object.values(productSales).sort((a, b) => b.sold - a.sold).slice(0, 10);
+                if (bestSellers.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5">Không có dữ liệu</td></tr>';
+                    return;
+                }
+                tbody.innerHTML = bestSellers.map(p =>
+                    `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.price.toLocaleString('vi-VN')}đ</td><td>${p.category}</td><td>${p.sold}</td></tr>`
+                ).join('');
+            })
+            .catch(() => {
+                tbody.innerHTML = '<tr><td colspan="5">Lỗi tải đơn hàng</td></tr>';
+            });
+    }
+
+    // Khi trang load, fetch dữ liệu và vẽ biểu đồ
+    window.addEventListener('DOMContentLoaded', async () => {
+        const { salesData, ordersData, ordersByDateData, inventoryData } = await fetchDashboardData();
+        console.log('Sales Data:', salesData);
+        console.log('Orders Data:', ordersData);
+        
+        // salesData: { labels: [...], values: [...] }
+        // ordersData: { labels: [...], values: [...] }
+        renderSalesChart(salesData);
+        renderOrdersChart(ordersData);
+        renderOrdersByDateChart(ordersByDateData);
+        renderInventoryChart(inventoryData);
+        renderDashboardStats();
+    });
     </script>
 </body>
 

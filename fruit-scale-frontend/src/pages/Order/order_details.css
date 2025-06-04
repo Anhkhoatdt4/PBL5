@@ -9,7 +9,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 15px 50px;
-    background: linear-gradient(45deg, #4caf50, #81c784);
+    background: linear-gradient(45deg, #3366ff, #5a8dee);
     color: white;
     font-weight: bold;
     margin-top: -10px;
@@ -31,7 +31,7 @@ header {
 
 .back-btn {
     background: white;
-    color: #2c6a5f;
+    color: #3366ff;
     padding: 8px 15px;
     border-radius: 20px;
     text-decoration: none;
@@ -121,7 +121,7 @@ h4 {
 footer {
     margin-top: 20px;
     padding: 10px;
-    background: #2c6a5f;
+    background: #3366ff;
     color: white;
 }
 .export-btn {
