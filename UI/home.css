@@ -271,7 +271,7 @@ nav ul li a {
 }
 
 footer {
-    background: #3366ff;
+    background: #30645a;;
     color: white;
     padding: 40px 20px;
     text-align: center;
@@ -299,7 +299,7 @@ footer {
 }
 
 .footer-container p {
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.6;
 }
 
@@ -315,7 +315,7 @@ footer {
 .footer-links ul li a {
     color: white;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 16px;
 }
 
 .footer-links ul li a:hover {

@@ -103,7 +103,7 @@ table tr:hover {
 }
 
 .edit-btn {
-    background: #17a2b8; 
+    background: #3717b8; 
     color: white;
     padding: 6px 10px;
     border-radius: 4px;
@@ -133,7 +133,7 @@ table tr:hover {
 }
 
 .add-btn {
-    background: #17a2b8; 
+    background: #3717b8; 
     color: white;
     padding: 6px 10px;
     border-radius: 4px;
@@ -217,4 +217,17 @@ form input {
 
 form input:hover {
     border : none;
+}
+
+.header-categories {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(45deg, #3366ff, #5a8dee);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: 100%;
+    margin-left: 0px;
 }

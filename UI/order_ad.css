@@ -86,7 +86,7 @@ table tr:hover {
 }
 
 .edit-btn {
-    background: #2196F3;
+    background: #3717b8;
     color: white;
     padding: 6px 10px;
     border-radius: 4px;
@@ -107,4 +107,17 @@ table tr:hover {
 }
 .view-btn:hover {
     background: #ab2905;
+}
+
+.header-categories {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(45deg, #3366ff, #5a8dee);
+    color: white;
+    padding: 15px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    width: 100%;
+    margin-left: 0px;
 }

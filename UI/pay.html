@@ -20,12 +20,13 @@
 </head>
 
 <body>
-    <header style="display: flex; justify-content: space-between; align-items: center; padding: 10px 10px; background-color: #30645a; ">
+    <header style="display: flex; justify-content: space-between; align-items: center; padding: 10px 10px; background: #30645a; ">
         <div class="logo" style="display: flex; align-items: center;">
             <img src="image/logo.png" alt="Logo" style="height: 40px; margin-right: 10px;">
             <h1 style="font-size: 20px; margin: 0;">BKN Fruits</h1>
         </div>
         <nav style="display: flex; gap: 15px;">
+            <a href="admin.html" class="nav-link admin-link"><i class="fa-solid fa-user-gear"></i> Quản lý Admin</a>
             <a href="history.html" class="nav-link history">📄 Lịch sử đơn hàng</a>
             <a href="home.html" class="back-btn" style="text-decoration: none; color: black;">🏠 Trang chủ</a>
         </nav>
@@ -194,6 +195,36 @@
       #chatbot-iframe-close i {
         pointer-events: none;
       }
+    .admin-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(90deg, #2d8b71 0%, #494fbd 100%);
+      border-radius: 8px;
+      padding: 8px 18px;
+      transition: background 0.18s, color 0.18s, box-shadow 0.18s, transform 0.18s;
+      box-shadow: 0 2px 8px rgba(51,102,255,0.10);
+      text-decoration: none;
+      border: none;
+      font-size: 1rem;
+      letter-spacing: 0.5px;
+    }
+    .admin-link i {
+      font-size: 1.25em;
+      color: #fff;
+      margin-right: 4px;
+    }
+    .admin-link:hover {
+      background: linear-gradient(90deg, #2d8b71 0%, #3366ff 100%);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(51,102,255,0.18);
+      transform: translateY(-2px) scale(1.04);
+    }
+    .admin-link:hover i {
+      color: #ffe066;
+    }
     </style>
     <button id="chatbot-iframe-btn" aria-label="Mở chatbot"><i class="fa-solid fa-comments"></i></button>
     <div id="chatbot-iframe-box">

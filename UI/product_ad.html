@@ -11,15 +11,20 @@
 
 <body>
     <div class="main-content">
-        <header>
+        <header class="header-categories">
             <h2>Quản lý tồn kho</h2>
         </header>
 
         <div class="top-bar">
             <div class="actions">
-                <button class="add-btn" style="background-color: #9df99d; border: #9df99d; color: #003c00;"><i
-                        class="fa-solid fa-plus"></i> Thêm sản phẩm</button>
-                <button class="export-btn" style="background-color: #efcaca; border: #efcaca; color: #bf0000;"><i
+                <button class="add-btn bt-hover" style="    margin-left: -1px;
+                        background:  linear-gradient(90deg, #ff6a88 0%, #6f42c1 100%);
+                        border: rgb(157, 200, 249);
+                        color: white;
+                        padding: 17px;
+                        border-radius: 8px">
+                <i class="fa-solid fa-plus"></i> Thêm sản phẩm</button>
+                <button id="export-bestseller-excel" class="export-btn"><i
                         class="fa-solid fa-file-export"></i> Xuất dữ liệu</button>
             </div>
             <div class="search-box">
@@ -76,6 +81,5 @@
     </div>
 
     <script src="product_ad.js"></script>
-</body>
-
+  </body>
 </html>

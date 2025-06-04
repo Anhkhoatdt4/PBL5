@@ -9,12 +9,10 @@ async function loadProducts() {
 
     data.forEach((item, index) => {
       const tr = document.createElement("tr");
-
       const lowStock = item.quantityInKg < 10;
       const quantityCell = lowStock
         ? `<td style="color: red; font-weight: bold;">${item.quantityInKg} <br><span style="font-size: 12px; color: darkred;">⚠ Sắp hết hàng!</span></td>`
         : `<td>${item.quantityInKg}</td>`;
-
       tr.innerHTML = `
           <td>${index + 1}</td>
           <td>${item.fruitName}</td>
@@ -163,4 +161,45 @@ const form = document.getElementById("addStockForm");
     })
     .catch((error) => console.error("Lỗi khi cập nhật:", error));
 }
+}
+
+// --- Export CSV logic ---
+function exportTableToCSV(filename = 'tonkho.csv') {
+  const rows = Array.from(document.querySelectorAll('#productTable tr'));
+  let csv = 'ID,Tên sản phẩm,Giá/kg,Số lượng (kg)\n';
+  rows.forEach(tr => {
+    const tds = tr.querySelectorAll('td');
+    if (tds.length >= 4) {
+      // Lấy số lượng (kg) chỉ là số, bỏ mọi ký tự/icon/cảnh báo
+      let soLuong = tds[3].innerText.match(/\d+[.,]?\d*/);
+      soLuong = soLuong ? soLuong[0].replace(/,/g, '') : '';
+      const row = [
+        tds[0].innerText.replace(/,/g, ''),
+        tds[1].innerText.replace(/,/g, ''),
+        tds[2].innerText.replace(/,/g, ''),
+        soLuong
+      ].join(',');
+      csv += row + '\n';
+    }
+  });
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = filename;
+  link.click();
+}
+
+function setupExportButton() {
+  const exportBtn = document.querySelector('.export-btn');
+  if (exportBtn) {
+    exportBtn.addEventListener('click', () => {
+      exportTableToCSV('tonkho.csv');
+    });
+  }
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setupExportButton);
+} else {
+  setupExportButton();
 }

@@ -240,6 +240,24 @@ footer {
     color: #555;
 }
 
+/* Thêm CSS cho ảnh đại diện đơn hàng */
+.order-avatar {
+    width: 100px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(51, 102, 255, 0.10);
+    border: none;
+    background: #fff;
+    transition: transform 0.2s;
+    padding-left: 22px;
+}
+
+.order-avatar:hover {
+    transform: scale(1.07) rotate(-2deg);
+    box-shadow: 0 4px 16px rgba(51,102,255,0.18);
+}
+
 /* Cải thiện responsive */
 @media (max-width: 768px) {
     .order-detail-card {

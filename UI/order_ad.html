@@ -6,6 +6,8 @@
     <title>Quản lý Đơn hàng</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="order_ad.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
 </head>
 <style>
         td {
@@ -21,7 +23,7 @@
     .edit-btn, .view-btn {
         padding: 6px 10px;
         border: none;
-        background-color: #348975;
+        background-color: #0049cf;
         border-radius: 4px;
         cursor: pointer;
     }
@@ -36,7 +38,7 @@
 </style>
 <body>
     <div class="main-content">
-        <header>
+        <header class="header-categories">
             <h2>Quản lý Đơn hàng</h2>
         </header>
         
@@ -64,5 +66,7 @@
             </tbody>
         </table>
     </div>
+    <!-- <script src="export_utils.js" defer></script> -->
+    <script src="order_ad.js" defer></script>
 </body>
 </html>

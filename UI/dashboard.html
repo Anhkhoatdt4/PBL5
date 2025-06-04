@@ -7,6 +7,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     
     <link rel="stylesheet" href="dashboard.css">
+    <style>
+        #bestseller-mode {
+          padding: 6px 16px;
+          border-radius: 6px;
+          border: 1px solid #7010ca;
+          background: #f8faff;
+          color: #222;
+          font-size: 1rem;
+          font-family: inherit;
+          outline: none;
+          transition: border 0.2s;
+          margin-left: 8px;
+        }
+        #bestseller-mode:focus {
+          border: 2px solid #1cb7ff;
+          background: #eaf1ff;
+        }
+        .export-btn {
+          background: linear-gradient(90deg, #ff6a88 0%, #6f42c1 100%);
+          color: #fff;
+          border: none;
+          border-radius: 6px;
+          padding: 6px 16px;
+          margin-left: 8px;
+          font-size: 0.98rem;
+          font-weight: 500;
+          cursor: pointer;
+          box-shadow: 0 2px 8px 0 rgba(111,66,193,0.10);
+          transition: background 0.2s, box-shadow 0.2s;
+        }
+        .export-btn:hover {
+          background: linear-gradient(90deg, #6f42c1 0%, #ff6a88 100%);
+          box-shadow: 0 4px 16px 0 rgba(111,66,193,0.18);
+        }
+    </style>
 </head>
 <body>
     <div class="main-content">
@@ -23,7 +58,7 @@
                 </div>
                 <div class="stat-card orange">
                     <i class="fa-solid fa-money-bill-1"></i>
-                    <p><strong id="stat-revenue">...</strong> Thu nhập</p>
+                    <p><strong id="stat-revenue">...</strong> Doanh thu</p>
                 </div>
                 <div class="stat-card red">
                     <i class="fa-solid fa-triangle-exclamation"></i>
@@ -33,23 +68,32 @@
         </div>
         
         <div class="table-container">
-            <h2>Sản phẩm bán chạy</h2>
+            <h2 style="margin: 5px; display: flex; align-items: center; justify-content: space-between;">
+                Sản phẩm bán chạy
+                <!-- <span>
+                    <button id="export-bestseller-excel" class="export-btn">Xuất Excel</button>
+                    <button id="export-bestseller-pdf" class="export-btn">Xuất PDF</button>
+                </span> -->
+            </h2>
+            <div style="margin-bottom: 10px;">
+                <label for="bestseller-mode"><b>Xem:</b></label>
+                <select id="bestseller-mode" >
+                    <option value="1">Sản phẩm bán chạy nhất</option>
+                    <option value="3" selected>Top 3 sản phẩm bán chạy</option>
+                </select>
+            </div>
             <table>
                 <thead>
                     <tr>
-                        <th>Mã sản phẩm</th>
+                        <th style="width: 28%;">Mã sản phẩm</th>
                         <th>Tên sản phẩm</th>
                         <th>Giá/kg</th>
                         <th>Danh mục</th>
+                        <th>Tồn kho (kg)</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>e759165d-4ff0-426c-a289-5b2e5604aec4</td>
-                        <td>Apples</td>
-                        <td>35.000đ</td>
-                        <td>Sản phẩm</td>
-                    </tr>
+                <tbody id="bestseller-tbody">
+                    <tr><td colspan="5">Đang tải...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -79,7 +123,48 @@
             </div>    
         </div>
     </div>
-    
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.7.0/jspdf.plugin.autotable.min.js"></script>
+    <script type="module" src="export_utils.js"></script>
+    <script type="module">
+      import { exportToExcel, exportToPDF } from './export_utils.js';
+      window.addEventListener('DOMContentLoaded', () => {
+        const excelBtn = document.getElementById('export-bestseller-excel');
+        const pdfBtn = document.getElementById('export-bestseller-pdf');
+        if (excelBtn) {
+          excelBtn.addEventListener('click', () => {
+            const rows = Array.from(document.querySelectorAll('#bestseller-tbody tr'));
+            const data = rows.map(tr => {
+              const tds = tr.querySelectorAll('td');
+              return {
+                'Mã sản phẩm': tds[0]?.innerText,
+                'Tên sản phẩm': tds[1]?.innerText,
+                'Giá/kg': tds[2]?.innerText,
+                'Danh mục': tds[3]?.innerText,
+                'Tồn kho (kg)': tds[4]?.innerText
+              };
+            });
+            exportToExcel(data, 'sanpham_banchay.xlsx', 'SanPhamBanChay');
+          });
+        }
+        if (pdfBtn) {
+          pdfBtn.addEventListener('click', () => {
+            const rows = Array.from(document.querySelectorAll('#bestseller-tbody tr'));
+            const data = rows.map(tr => {
+              const tds = tr.querySelectorAll('td');
+              return {
+                'Mã sản phẩm': tds[0]?.innerText,
+                'Tên sản phẩm': tds[1]?.innerText,
+                'Giá/kg': tds[2]?.innerText,
+                'Danh mục': tds[3]?.innerText,
+                'Tồn kho (kg)': tds[4]?.innerText
+              };
+            });
+            exportToPDF(data, ['Mã sản phẩm','Tên sản phẩm','Giá/kg','Danh mục','Tồn kho (kg)'], 'sanpham_banchay.pdf', 'Sản phẩm bán chạy');
+          });
+        }
+      });
+    </script>
 </body>
 </html>

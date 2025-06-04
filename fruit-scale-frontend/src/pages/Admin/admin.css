@@ -75,9 +75,9 @@ body {
 }
 
 .main-content {
-    margin-left: 260px;
+    margin-left: 270px;
     padding: 20px;
-    width: calc(100% - 260px);
+    width: calc(100% - 308px);
 }
 
 header {
@@ -89,6 +89,8 @@ header {
     padding: 15px 20px;
     border-radius: 5px;
     margin-bottom: 20px;
+    width: 102%;
+    margin-left: 13px;
 }
 
 .logout-btn {
