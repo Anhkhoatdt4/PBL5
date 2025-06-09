@@ -1,435 +1,542 @@
 <!DOCTYPE html>
 <html lang="vi">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Admin</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-    <link rel="stylesheet" href="admin.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="admin.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
+  </head>
 
-<body>
+  <body>
     <!-- Sidebar -->
     <div class="sidebar">
-        <div class="admin-info">
-            <img src="https://i.pinimg.com/originals/78/46/75/7846752cfd7b02455fa07c42a5ab2f37.jpg">
-            <p>Công Bảo</p>
-            <p class="welcome-msg">Chào mừng bạn trở lại</p>
-        </div>
-        <ul style="margin: 10px;">
-            <li><a href="#" onclick="loadPage('dashboard'); return false;"><i class="fa-solid fa-chart-bar"></i> Thống
-                    kê & Báo cáo</a></li>
-            <li><a href="#" onclick="loadPage('product_ad'); return false;"><i class="fa-solid fa-box"></i> Quản lý tồn
-                    kho</a></li>
-            <li><a href="#" onclick="loadPage('order_ad'); return false;"><i class="fa-solid fa-shopping-cart"></i> Quản
-                    lý đơn hàng</a></li>
-            <li><a href="#" onclick="loadPage('fruit_info_image'); return false;"><i class="fa-solid fa-user"></i> Quản lý thử
-                    nghiệm AI</a></li>
-        </ul>
+      <div class="admin-info">
+        <img
+          src="https://i.pinimg.com/originals/78/46/75/7846752cfd7b02455fa07c42a5ab2f37.jpg"
+        />
+        <p>Công Bảo</p>
+        <p class="welcome-msg">Chào mừng bạn trở lại</p>
+      </div>
+      <ul style="margin: 10px">
+        <li>
+          <a href="#" onclick="loadPage('dashboard'); return false;"
+            ><i class="fa-solid fa-chart-bar"></i> Thống kê & Báo cáo</a
+          >
+        </li>
+        <li>
+          <a href="#" onclick="loadPage('product_ad'); return false;"
+            ><i class="fa-solid fa-box"></i> Quản lý tồn kho</a
+          >
+        </li>
+        <li>
+          <a href="#" onclick="loadPage('order_ad'); return false;"
+            ><i class="fa-solid fa-shopping-cart"></i> Quản lý đơn hàng</a
+          >
+        </li>
+        <li>
+          <a href="#" onclick="loadPage('fruit_info_image'); return false;"
+            ><i class="fa-solid fa-user"></i> Quản lý thử nghiệm AI</a
+          >
+        </li>
+      </ul>
     </div>
     <div class="main-content">
-        <header>
-            <div class="time">
-                <i class="fa-solid fa-clock"></i> <span id="current-time"></span>
-            </div>
-            <a href="login.html" class="logout-btn"><i class="fa-solid fa-sign-out-alt"></i> Đăng xuất</a>
-        </header>
-        <div class="content" id="content">
-
+      <header>
+        <div class="time">
+          <i class="fa-solid fa-clock"></i> <span id="current-time"></span>
         </div>
+        <a href="login.html" class="logout-btn"
+          ><i class="fa-solid fa-sign-out-alt"></i> Đăng xuất</a
+        >
+      </header>
+      <div class="content" id="content"></div>
     </div>
     <!-- Loading Spinner Overlay -->
-    <div id="loading-overlay" style="display:none;position:fixed;z-index:9999;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.25);backdrop-filter:blur(2px);justify-content:center;align-items:center;">
-        <div class="spinner"></div>
+    <div
+      id="loading-overlay"
+      style="
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.25);
+        backdrop-filter: blur(2px);
+        justify-content: center;
+        align-items: center;
+      "
+    >
+      <div class="spinner"></div>
     </div>
     <style>
-    @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-    .spinner {
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+      .spinner {
         width: 70px;
         height: 70px;
         border: 8px solid #f3f3f3;
         border-top: 8px solid #3366ff;
         border-radius: 50%;
         animation: spin 1s linear infinite;
-    }
-    #loading-overlay {
+      }
+      #loading-overlay {
         display: none;
         position: fixed;
         z-index: 9999;
-        top: 0; left: 0; width: 100vw; height: 100vh;
-        background: rgba(0,0,0,0.25);
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.25);
         backdrop-filter: blur(2px);
         justify-content: center;
         align-items: center;
-    }
+      }
     </style>
     <script>
-        function updateTime() {
-            const now = new Date();
-            const formattedTime = now.toLocaleString('vi-VN', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
-            document.getElementById("current-time").innerText = formattedTime.replace("lúc", "");
-        }
-        setInterval(updateTime, 500);
+      function updateTime() {
+        const now = new Date();
+        const formattedTime = now.toLocaleString("vi-VN", {
+          weekday: "long",
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+        document.getElementById("current-time").innerText =
+          formattedTime.replace("lúc", "");
+      }
+      setInterval(updateTime, 500);
 
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
+      function getQueryParam(param) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(param);
+      }
 
-        function setActiveSidebar(page) {
-            const sidebarLinks = document.querySelectorAll('.sidebar ul li');
-            sidebarLinks.forEach(li => li.classList.remove('active'));
-            if (page === 'dashboard') sidebarLinks[0].classList.add('active');
-            else if (page === 'product_ad') sidebarLinks[1].classList.add('active');
-            else if (page === 'order_ad') sidebarLinks[2].classList.add('active');
-            else if (page === 'fruit_info_image') sidebarLinks[3].classList.add('active');
-        }
+      function setActiveSidebar(page) {
+        const sidebarLinks = document.querySelectorAll(".sidebar ul li");
+        sidebarLinks.forEach((li) => li.classList.remove("active"));
+        if (page === "dashboard") sidebarLinks[0].classList.add("active");
+        else if (page === "product_ad") sidebarLinks[1].classList.add("active");
+        else if (page === "order_ad") sidebarLinks[2].classList.add("active");
+        else if (page === "fruit_info_image")
+          sidebarLinks[3].classList.add("active");
+      }
 
-        function showLoading() {
-            document.getElementById('loading-overlay').style.display = 'flex';
-        }
-        function hideLoading() {
-            document.getElementById('loading-overlay').style.display = 'none';
-        }
+      function showLoading() {
+        document.getElementById("loading-overlay").style.display = "flex";
+      }
+      function hideLoading() {
+        document.getElementById("loading-overlay").style.display = "none";
+      }
 
-        function loadPage(page) {
-            let content = document.getElementById('content');
-            showLoading();
-            content.innerHTML = '<p>Đang tải...</p>';
-            setActiveSidebar(page);
-            fetch(page + '.html')
-                .then(response => response.text())
-                .then(data => {
-                    content.innerHTML = data;
-                    hideLoading();
-                    if (page === 'order_ad') {
-                        console.log("Loading order_ad.js");
-                        const script = document.createElement("script");
-                        script.src = "order_ad.js";
-                        script.onload = () => loadOrders();
-                        document.body.appendChild(script);
+      function loadPage(page) {
+        let content = document.getElementById("content");
+        showLoading();
+        content.innerHTML = "<p>Đang tải...</p>";
+        setActiveSidebar(page);
+        fetch(page + ".html")
+          .then((response) => response.text())
+          .then((data) => {
+            content.innerHTML = data;
+            hideLoading();
+            if (page === "order_ad") {
+              console.log("Loading order_ad.js");
+              const script = document.createElement("script");
+              script.src = "order_ad.js";
+              script.onload = () => loadOrders();
+              document.body.appendChild(script);
+            } else if (page === "product_ad") {
+              console.log("Loading product_ad.js");
+              const script = document.createElement("script");
+              script.src = "product_ad.js";
+              script.onload = () => loadProducts();
+              document.body.appendChild(script);
+            } else if (page === "staff_ad") {
+              console.log("Loading staff_ad.js");
+              const script = document.createElement("script");
+              script.src = "staff_ad.js";
+              script.onload = () => loadStaffs();
+              document.body.appendChild(script);
+            } else if (page === "dashboard") {
+              console.log("Loading dashboard.js");
+              const script = document.createElement("script");
+              script.onload = () => loadAI();
+              document.body.appendChild(script);
+
+              // After loading dashboard, fetch and render stat cards
+              setTimeout(() => {
+                if (typeof renderDashboardStats === "function") {
+                  renderDashboardStats();
+                }
+                // Attach event listener for select after dashboard is loaded
+                const select = document.getElementById("bestseller-mode");
+                if (select) {
+                  select.addEventListener(
+                    "change",
+                    renderBestSellerTableInDashboard
+                  );
+                }
+                renderBestSellerTableInDashboard();
+              }, 300);
+            } else if (page === "fruit_info_image") {
+              console.log("Loading fruit_info_image.html");
+              const script = document.createElement("script");
+              script.src = "fruit_info_image.js";
+              script.onload = () => loadFruitData();
+              document.body.appendChild(script);
+            }
+            // Vẽ biểu đồ nếu là dashboard
+            if (page === "dashboard") {
+              // Đảm bảo Chart.js đã được load trong dashboard.html
+              setTimeout(() => {
+                if (typeof fetchDashboardData === "function") {
+                  fetchDashboardData().then(({ salesData, ordersData }) => {
+                    if (
+                      typeof renderSalesChart === "function" &&
+                      typeof renderOrdersChart === "function"
+                    ) {
+                      renderSalesChart(salesData);
+                      renderOrdersChart(ordersData);
                     }
-                    else if (page === 'product_ad') {
-                        console.log("Loading product_ad.js");
-                        const script = document.createElement("script");
-                        script.src = "product_ad.js";
-                        script.onload = () => loadProducts();
-                        document.body.appendChild(script);
-                    }
-                    else if (page === 'staff_ad') {
-                        console.log("Loading staff_ad.js");
-                        const script = document.createElement("script");
-                        script.src = "staff_ad.js";
-                        script.onload = () => loadStaffs();
-                        document.body.appendChild(script);
-                    }
-                    else if (page === 'dashboard') {
-                        console.log("Loading dashboard.js");
-                        const script = document.createElement("script");
-                        script.onload = () => loadAI();
-                        document.body.appendChild(script);
+                  });
+                }
+              }, 300);
+            }
+          })
+          .catch((error) => {
+            content.innerHTML = "<p>Lỗi khi tải trang.</p>";
+            hideLoading();
+            console.error("Lỗi:", error);
+          });
+      }
+      const page = getQueryParam("page") || "dashboard";
+      console.log("Current page:", page);
 
-                        // After loading dashboard, fetch and render stat cards
-                        setTimeout(() => {
-                            if (typeof renderDashboardStats === 'function') {
-                                renderDashboardStats();
-                            }
-                            // Attach event listener for select after dashboard is loaded
-                            const select = document.getElementById('bestseller-mode');
-                            if (select) {
-                                select.addEventListener('change', renderBestSellerTableInDashboard);
-                            }
-                            renderBestSellerTableInDashboard();
-                        }, 300);
-                    }
-                    else if (page === 'fruit_info_image') {
-                        console.log("Loading fruit_info_image.html");
-                        const script = document.createElement("script");
-                        script.src = "fruit_info_image.js";
-                        script.onload = () => loadFruitData();
-                        document.body.appendChild(script);
-                    }
-                    // Vẽ biểu đồ nếu là dashboard
-                    if (page === 'dashboard') {
-                        // Đảm bảo Chart.js đã được load trong dashboard.html
-                        setTimeout(() => {
-                            if (typeof fetchDashboardData === 'function') {
-                                fetchDashboardData().then(({ salesData, ordersData }) => {
-                                    if (typeof renderSalesChart === 'function' && typeof renderOrdersChart === 'function') {
-                                        renderSalesChart(salesData);
-                                        renderOrdersChart(ordersData);
-                                    }
-                                });
-                            }
-                        }, 300);
-                    }
-                })
-                .catch(error => {
-                    content.innerHTML = '<p>Lỗi khi tải trang.</p>';
-                    hideLoading();
-                    console.error("Lỗi:", error);
-                });
-        }
-        const page = getQueryParam('page') || 'dashboard';
-        console.log('Current page:', page);
-
-        loadPage(page);
-
-
+      loadPage(page);
     </script>
 
-        <script>
-    // Vẽ biểu đồ doanh số (chart1) và thống kê đơn hàng (chart2) bằng Chart.js, fetch dữ liệu từ backend
-    async function fetchDashboardData() {
-        const res = await fetch('http://localhost:8080/api/orders');
+    <script>
+      // Vẽ biểu đồ doanh số (chart1) và thống kê đơn hàng (chart2) bằng Chart.js, fetch dữ liệu từ backend
+      async function fetchDashboardData() {
+        const res = await fetch("http://localhost:8080/api/orders");
         const orders = await res.json();
-        console.log('Orders data:', orders);
+        console.log("Orders data:", orders);
 
         // Biểu đồ doanh số: tổng doanh thu theo ngày (YYYY-MM-DD)
         const salesByDate = {};
-        orders.forEach(order => {
-            const date = order.createdAt ? order.createdAt.slice(0, 10) : 'Không xác định';
-            salesByDate[date] = (salesByDate[date] || 0) + (order.totalPrice || 0);
+        orders.forEach((order) => {
+          const date = order.createdAt
+            ? order.createdAt.slice(0, 10)
+            : "Không xác định";
+          salesByDate[date] =
+            (salesByDate[date] || 0) + (order.totalPrice || 0);
         });
         const salesLabels = Object.keys(salesByDate).sort();
-        const salesValues = salesLabels.map(date => salesByDate[date]);
+        const salesValues = salesLabels.map((date) => salesByDate[date]);
         const salesData = { labels: salesLabels, values: salesValues };
 
         // Biểu đồ đơn hàng: đếm số đơn theo trạng thái
         const statusCount = {};
-        orders.forEach(order => {
-            const status = order.status || 'Khác';
-            statusCount[status] = (statusCount[status] || 0) + 1;
+        orders.forEach((order) => {
+          const status = order.status || "Khác";
+          statusCount[status] = (statusCount[status] || 0) + 1;
         });
         const orderLabels = Object.keys(statusCount);
-        const orderValues = orderLabels.map(status => statusCount[status]);
+        const orderValues = orderLabels.map((status) => statusCount[status]);
         const ordersData = { labels: orderLabels, values: orderValues };
 
         // Biểu đồ số đơn hàng theo ngày
         const orderCountByDate = {};
-        orders.forEach(order => {
-            const date = order.createdAt ? order.createdAt.slice(0, 10) : 'Không xác định';
-            orderCountByDate[date] = (orderCountByDate[date] || 0) + 1;
+        orders.forEach((order) => {
+          const date = order.createdAt
+            ? order.createdAt.slice(0, 10)
+            : "Không xác định";
+          orderCountByDate[date] = (orderCountByDate[date] || 0) + 1;
         });
         const orderDateLabels = Object.keys(orderCountByDate).sort();
-        const orderDateValues = orderDateLabels.map(date => orderCountByDate[date]);
-        const ordersByDateData = { labels: orderDateLabels, values: orderDateValues };
+        const orderDateValues = orderDateLabels.map(
+          (date) => orderCountByDate[date]
+        );
+        const ordersByDateData = {
+          labels: orderDateLabels,
+          values: orderDateValues,
+        };
 
         // Biểu đồ tồn kho: fetch inventory
         let inventoryData = { labels: [], values: [] };
         try {
-            const invRes = await fetch('http://localhost:8080/api/inventory');
-            const inventory = await invRes.json();
-            inventoryData.labels = inventory.map(item => item.fruitName);
-            inventoryData.values = inventory.map(item => item.quantityInKg || 0);
+          const invRes = await fetch("http://localhost:8080/api/inventory");
+          const inventory = await invRes.json();
+          inventoryData.labels = inventory.map((item) => item.fruitName);
+          inventoryData.values = inventory.map(
+            (item) => item.quantityInKg || 0
+          );
         } catch (e) {
-            console.error('Lỗi khi tải tồn kho:', e);
+          console.error("Lỗi khi tải tồn kho:", e);
         }
 
         return { salesData, ordersData, ordersByDateData, inventoryData };
-    }
+      }
 
-    let salesChartInstance = null;
-let ordersChartInstance = null;
-let ordersByDateChartInstance = null;
-let inventoryChartInstance = null;
+      let salesChartInstance = null;
+      let ordersChartInstance = null;
+      let ordersByDateChartInstance = null;
+      let inventoryChartInstance = null;
 
-function renderSalesChart(data) {
-    const ctx = document.getElementById('chart1').getContext('2d');
-    if (window.salesChartInstance) {
-        window.salesChartInstance.destroy();
-    }
-    window.salesChartInstance = new Chart(ctx, {
-        type: 'line',
-        data: {
+      function renderSalesChart(data) {
+        const ctx = document.getElementById("chart1").getContext("2d");
+        if (window.salesChartInstance) {
+          window.salesChartInstance.destroy();
+        }
+        window.salesChartInstance = new Chart(ctx, {
+          type: "line",
+          data: {
             labels: data.labels,
-            datasets: [{
-                label: 'Doanh số (VNĐ)',
+            datasets: [
+              {
+                label: "Doanh số (VNĐ)",
                 data: data.values,
-                borderColor: '#3366ff',
-                backgroundColor: 'rgba(51,102,255,0.08)',
+                borderColor: "#3366ff",
+                backgroundColor: "rgba(51,102,255,0.08)",
                 fill: true,
-                tension: 0.3
-            }]
-        },
-        options: {
+                tension: 0.3,
+              },
+            ],
+          },
+          options: {
             responsive: true,
             plugins: {
-                legend: { display: false },
-                title: { display: false }
+              legend: { display: false },
+              title: { display: false },
             },
             scales: {
-                y: { beginAtZero: true }
-            }
-        }
-    });
-}
+              y: { beginAtZero: true },
+            },
+          },
+        });
+      }
 
-function renderOrdersChart(data) {
-    const ctx = document.getElementById('chart2').getContext('2d');
-    if (window.ordersChartInstance) {
-        window.ordersChartInstance.destroy();
-    }
-    window.ordersChartInstance = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
+      function renderOrdersChart(data) {
+        const ctx = document.getElementById("chart2").getContext("2d");
+        if (window.ordersChartInstance) {
+          window.ordersChartInstance.destroy();
+        }
+        window.ordersChartInstance = new Chart(ctx, {
+          type: "doughnut",
+          data: {
             labels: data.labels,
-            datasets: [{
+            datasets: [
+              {
                 data: data.values,
-                backgroundColor: ['#3366ff','#4caf50','#ff9800','#e91e63','#9c27b0','#ffeb3b','#607d8b'],
+                backgroundColor: [
+                  "#3366ff",
+                  "#4caf50",
+                  "#ff9800",
+                  "#e91e63",
+                  "#9c27b0",
+                  "#ffeb3b",
+                  "#607d8b",
+                ],
                 borderWidth: 1,
-            }]
-        },
-        options: {
+              },
+            ],
+          },
+          options: {
             responsive: true,
             plugins: {
-                legend: { position: 'bottom' },
-                title: { display: false }
-            }
-        }
-    });
-}
+              legend: { position: "bottom" },
+              title: { display: false },
+            },
+          },
+        });
+      }
 
-function renderOrdersByDateChart(data) {
-    const ctx = document.getElementById('chart3').getContext('2d');
-    if (window.ordersByDateChartInstance) {
-        window.ordersByDateChartInstance.destroy();
-    }
-    window.ordersByDateChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
+      function renderOrdersByDateChart(data) {
+        const ctx = document.getElementById("chart3").getContext("2d");
+        if (window.ordersByDateChartInstance) {
+          window.ordersByDateChartInstance.destroy();
+        }
+        window.ordersByDateChartInstance = new Chart(ctx, {
+          type: "bar",
+          data: {
             labels: data.labels,
-            datasets: [{
-                label: 'Số đơn hàng',
+            datasets: [
+              {
+                label: "Số đơn hàng",
                 data: data.values,
-                backgroundColor: '#3366ff',
-                borderRadius: 8
-            }]
-        },
-        options: {
+                backgroundColor: "#3366ff",
+                borderRadius: 8,
+              },
+            ],
+          },
+          options: {
             responsive: true,
             plugins: {
-                legend: { display: false },
-                title: { display: false }
+              legend: { display: false },
+              title: { display: false },
             },
             scales: {
-                y: { beginAtZero: true }
-            }
-        }
-    });
-}
+              y: { beginAtZero: true },
+            },
+          },
+        });
+      }
 
-function renderInventoryChart(data) {
-    const ctx = document.getElementById('chart4').getContext('2d');
-    if (window.inventoryChartInstance) {
-        window.inventoryChartInstance.destroy();
-    }
-    window.inventoryChartInstance = new Chart(ctx, {
-        type: 'bar',
-        data: {
+      function renderInventoryChart(data) {
+        const ctx = document.getElementById("chart4").getContext("2d");
+        if (window.inventoryChartInstance) {
+          window.inventoryChartInstance.destroy();
+        }
+        window.inventoryChartInstance = new Chart(ctx, {
+          type: "bar",
+          data: {
             labels: data.labels,
-            datasets: [{
-                label: 'Tồn kho (kg)',
+            datasets: [
+              {
+                label: "Tồn kho (kg)",
                 data: data.values,
-                backgroundColor: ['#c4ad1a', '#f7d358', '#43b324', '#f9a602', '#ffe066', '#b2d430', '#f6e58d'],
-                borderRadius: 8
-            }]
-        },
-        options: {
+                backgroundColor: [
+                  "#c4ad1a",
+                  "#f7d358",
+                  "#43b324",
+                  "#f9a602",
+                  "#ffe066",
+                  "#b2d430",
+                  "#f6e58d",
+                ],
+                borderRadius: 8,
+              },
+            ],
+          },
+          options: {
             responsive: true,
             plugins: {
-                legend: { display: false },
-                title: { display: false }
+              legend: { display: false },
+              title: { display: false },
             },
             scales: {
-                
-                y: { beginAtZero: true }
-            }
-        }
-    });
-}
+              y: { beginAtZero: true },
+            },
+          },
+        });
+      }
 
-    async function renderDashboardStats() {
+      async function renderDashboardStats() {
         // Fetch products
         let productCount = 0;
         let outOfStock = 0;
-    
+
         // Fetch orders and revenue
         let orderCount = 0;
         let totalRevenue = 0;
         try {
-            const res = await fetch('http://localhost:8080/api/orders');
-            const orders = await res.json();
-            orderCount = orders.length;
-            totalRevenue = orders.reduce((sum, o) => sum + (o.totalPrice || 0), 0);
-        } catch (e) { orderCount = 'Lỗi'; totalRevenue = 'Lỗi'; }
+          const res = await fetch("http://localhost:8080/api/orders");
+          const orders = await res.json();
+          orderCount = orders.length;
+          totalRevenue = orders.reduce(
+            (sum, o) => sum + (o.totalPrice || 0),
+            0
+          );
+        } catch (e) {
+          orderCount = "Lỗi";
+          totalRevenue = "Lỗi";
+        }
 
         // Fetch inventory for out-of-stock
         try {
-            const res = await fetch('http://localhost:8080/api/inventory');
-            const inventory = await res.json();
-            productCount = inventory.length;
-            outOfStock = inventory.filter(item => (item.quantityInKg || 0) === 0).length;
-        } catch (e) { outOfStock = 'Lỗi'; }
+          const res = await fetch("http://localhost:8080/api/inventory");
+          const inventory = await res.json();
+          productCount = inventory.length;
+          outOfStock = inventory.filter(
+            (item) => (item.quantityInKg || 0) === 0
+          ).length;
+        } catch (e) {
+          outOfStock = "Lỗi";
+        }
 
-        if(document.getElementById('stat-products'))
-            document.getElementById('stat-products').textContent = productCount;
-        if(document.getElementById('stat-orders'))
-            document.getElementById('stat-orders').textContent = orderCount;
-        if(document.getElementById('stat-revenue'))
-            document.getElementById('stat-revenue').textContent = typeof totalRevenue === 'number' ? totalRevenue.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'}) : totalRevenue;
-        if(document.getElementById('stat-outofstock'))
-            document.getElementById('stat-outofstock').textContent = outOfStock;
-    }
+        if (document.getElementById("stat-products"))
+          document.getElementById("stat-products").textContent = productCount;
+        if (document.getElementById("stat-orders"))
+          document.getElementById("stat-orders").textContent = orderCount;
+        if (document.getElementById("stat-revenue"))
+          document.getElementById("stat-revenue").textContent =
+            typeof totalRevenue === "number"
+              ? totalRevenue.toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                })
+              : totalRevenue;
+        if (document.getElementById("stat-outofstock"))
+          document.getElementById("stat-outofstock").textContent = outOfStock;
+      }
 
-    function renderBestSellerTableInDashboard() {
-        const tbody = document.getElementById('bestseller-tbody');
-        const select = document.getElementById('bestseller-mode');
+      function renderBestSellerTableInDashboard() {
+        const tbody = document.getElementById("bestseller-tbody");
+        const select = document.getElementById("bestseller-mode");
         let topN = 3;
         if (select) {
-            topN = parseInt(select.value, 10) || 3;
+          topN = parseInt(select.value, 10) || 3;
         }
         if (!tbody) {
-            setTimeout(renderBestSellerTableInDashboard, 200);
-            return;
+          setTimeout(renderBestSellerTableInDashboard, 200);
+          return;
         }
-        fetch('http://localhost:8080/api/inventory')
-            .then(res => res.json())
-            .then(inventory => {
-                if (!Array.isArray(inventory) || inventory.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="5">Không có dữ liệu</td></tr>';
-                    return;
-                }
-                const sorted = [...inventory].sort((a, b) => (a.quantityInKg || 0) - (b.quantityInKg || 0));
-                const bestSellers = sorted.slice(0, topN);
-                tbody.innerHTML = bestSellers.map(item =>
-                    `<tr><td>${item.id || ''}</td><td>${item.fruitName || item.name || ''}</td><td>${(item.pricePerKg || item.price || 0).toLocaleString('vi-VN')}đ</td><td>Trái cây</td><td>${item.quantityInKg || 0}</td></tr>`
-                ).join('');
-            })
-            .catch(() => {
-                tbody.innerHTML = '<tr><td colspan="5">Lỗi tải dữ liệu tồn kho</td></tr>';
-            });
-    }
+        fetch("http://localhost:8080/api/inventory")
+          .then((res) => res.json())
+          .then((inventory) => {
+            if (!Array.isArray(inventory) || inventory.length === 0) {
+              tbody.innerHTML =
+                '<tr><td colspan="5">Không có dữ liệu</td></tr>';
+              return;
+            }
+            const sorted = [...inventory].sort(
+              (a, b) => (a.quantityInKg || 0) - (b.quantityInKg || 0)
+            );
+            const bestSellers = sorted.slice(0, topN);
+            tbody.innerHTML = bestSellers
+              .map(
+                (item, index) =>
+                  `<tr><td>${index + 1}</td><td>${
+                    item.fruitName || item.name || ""
+                  }</td><td>${(
+                    item.pricePerKg ||
+                    item.price ||
+                    0
+                  ).toLocaleString("vi-VN")}đ</td><td>Trái cây</td><td>${
+                    item.quantityInKg || 0
+                  }</td></tr>`
+              )
+              .join("");
+          })
+          .catch(() => {
+            tbody.innerHTML =
+              '<tr><td colspan="5">Lỗi tải dữ liệu tồn kho</td></tr>';
+          });
+      }
 
-    // Khi trang load, fetch dữ liệu và vẽ biểu đồ
-    window.addEventListener('DOMContentLoaded', async () => {
-        const { salesData, ordersData, ordersByDateData, inventoryData } = await fetchDashboardData();
-        console.log('Sales Data:', salesData);
-        console.log('Orders Data:', ordersData);
-        
+      // Khi trang load, fetch dữ liệu và vẽ biểu đồ
+      window.addEventListener("DOMContentLoaded", async () => {
+        const { salesData, ordersData, ordersByDateData, inventoryData } =
+          await fetchDashboardData();
+        console.log("Sales Data:", salesData);
+        console.log("Orders Data:", ordersData);
+
         // salesData: { labels: [...], values: [...] }
         // ordersData: { labels: [...], values: [...] }
         renderSalesChart(salesData);
@@ -437,106 +544,142 @@ function renderInventoryChart(data) {
         renderOrdersByDateChart(ordersByDateData);
         renderInventoryChart(inventoryData);
         renderDashboardStats();
-    });
-    async function fetchDashboardDataAndRenderAll() {
+      });
+      async function fetchDashboardDataAndRenderAll() {
         // Fetch orders and inventory in parallel
         let orders = [];
         let inventory = [];
         try {
-            const [ordersRes, inventoryRes] = await Promise.all([
-                fetch('http://localhost:8080/api/orders'),
-                fetch('http://localhost:8080/api/inventory')
-            ]);
-            orders = await ordersRes.json();
-            inventory = await inventoryRes.json();
+          const [ordersRes, inventoryRes] = await Promise.all([
+            fetch("http://localhost:8080/api/orders"),
+            fetch("http://localhost:8080/api/inventory"),
+          ]);
+          orders = await ordersRes.json();
+          inventory = await inventoryRes.json();
         } catch (e) {
-            // fallback for errors
-            orders = [];
-            inventory = [];
+          // fallback for errors
+          orders = [];
+          inventory = [];
         }
 
         // --- Render stat cards ---
         let productCount = inventory.length;
-        let outOfStock = inventory.filter(item => (item.quantityInKg || 0) === 0).length;
+        let outOfStock = inventory.filter(
+          (item) => (item.quantityInKg || 0) === 0
+        ).length;
         let orderCount = orders.length;
-        let totalRevenue = orders.reduce((sum, o) => sum + (o.totalPrice || 0), 0);
-        if(document.getElementById('stat-products'))
-            document.getElementById('stat-products').textContent = productCount;
-        if(document.getElementById('stat-orders'))
-            document.getElementById('stat-orders').textContent = orderCount;
-        if(document.getElementById('stat-revenue'))
-            document.getElementById('stat-revenue').textContent = typeof totalRevenue === 'number' ? totalRevenue.toLocaleString('vi-VN', {style: 'currency', currency: 'VND'}) : totalRevenue;
-        if(document.getElementById('stat-outofstock'))
-            document.getElementById('stat-outofstock').textContent = outOfStock;
+        let totalRevenue = orders.reduce(
+          (sum, o) => sum + (o.totalPrice || 0),
+          0
+        );
+        if (document.getElementById("stat-products"))
+          document.getElementById("stat-products").textContent = productCount;
+        if (document.getElementById("stat-orders"))
+          document.getElementById("stat-orders").textContent = orderCount;
+        if (document.getElementById("stat-revenue"))
+          document.getElementById("stat-revenue").textContent =
+            typeof totalRevenue === "number"
+              ? totalRevenue.toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                })
+              : totalRevenue;
+        if (document.getElementById("stat-outofstock"))
+          document.getElementById("stat-outofstock").textContent = outOfStock;
 
         // --- Render best seller table ---
-        const tbody = document.getElementById('bestseller-tbody');
-        const select = document.getElementById('bestseller-mode');
+        const tbody = document.getElementById("bestseller-tbody");
+        const select = document.getElementById("bestseller-mode");
         let topN = 3;
         if (select) {
-            topN = parseInt(select.value, 10) || 3;
+          topN = parseInt(select.value, 10) || 3;
         }
         if (tbody) {
-            if (!Array.isArray(inventory) || inventory.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="5">Không có dữ liệu</td></tr>';
-            } else {
-                const sorted = [...inventory].sort((a, b) => (a.quantityInKg || 0) - (b.quantityInKg || 0));
-                const bestSellers = sorted.slice(0, topN);
-                tbody.innerHTML = bestSellers.map(item =>
-                    `<tr><td>${item.id || ''}</td><td>${item.fruitName || item.name || ''}</td><td>${(item.pricePerKg || item.price || 0).toLocaleString('vi-VN')}đ</td><td>Trái cây</td><td>${item.quantityInKg || 0}</td></tr>`
-                ).join('');
-            }
+          if (!Array.isArray(inventory) || inventory.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="5">Không có dữ liệu</td></tr>';
+          } else {
+            const sorted = [...inventory].sort(
+              (a, b) => (a.quantityInKg || 0) - (b.quantityInKg || 0)
+            );
+            const bestSellers = sorted.slice(0, topN);
+            tbody.innerHTML = bestSellers
+              .map(
+                (item) =>
+                  `<tr><td>${item.id || ""}</td><td>${
+                    item.fruitName || item.name || ""
+                  }</td><td>${(
+                    item.pricePerKg ||
+                    item.price ||
+                    0
+                  ).toLocaleString("vi-VN")}đ</td><td>Trái cây</td><td>${
+                    item.quantityInKg || 0
+                  }</td></tr>`
+              )
+              .join("");
+          }
         }
 
         // --- Render charts ---
         // Sales by day
         const salesByDate = {};
-        orders.forEach(order => {
-            const date = order.createdAt ? order.createdAt.slice(0, 10) : 'Không xác định';
-            salesByDate[date] = (salesByDate[date] || 0) + (order.totalPrice || 0);
+        orders.forEach((order) => {
+          const date = order.createdAt
+            ? order.createdAt.slice(0, 10)
+            : "Không xác định";
+          salesByDate[date] =
+            (salesByDate[date] || 0) + (order.totalPrice || 0);
         });
         const salesLabels = Object.keys(salesByDate).sort();
-        const salesValues = salesLabels.map(date => salesByDate[date]);
+        const salesValues = salesLabels.map((date) => salesByDate[date]);
         renderSalesChart({ labels: salesLabels, values: salesValues });
 
         // Order status
         const statusCount = {};
-        orders.forEach(order => {
-            const status = order.status || 'Khác';
-            statusCount[status] = (statusCount[status] || 0) + 1;
+        orders.forEach((order) => {
+          const status = order.status || "Khác";
+          statusCount[status] = (statusCount[status] || 0) + 1;
         });
         const orderLabels = Object.keys(statusCount);
-        const orderValues = orderLabels.map(status => statusCount[status]);
+        const orderValues = orderLabels.map((status) => statusCount[status]);
         renderOrdersChart({ labels: orderLabels, values: orderValues });
 
         // Orders by day
         const orderCountByDate = {};
-        orders.forEach(order => {
-            const date = order.createdAt ? order.createdAt.slice(0, 10) : 'Không xác định';
-            orderCountByDate[date] = (orderCountByDate[date] || 0) + 1;
+        orders.forEach((order) => {
+          const date = order.createdAt
+            ? order.createdAt.slice(0, 10)
+            : "Không xác định";
+          orderCountByDate[date] = (orderCountByDate[date] || 0) + 1;
         });
         const orderDateLabels = Object.keys(orderCountByDate).sort();
-        const orderDateValues = orderDateLabels.map(date => orderCountByDate[date]);
-        renderOrdersByDateChart({ labels: orderDateLabels, values: orderDateValues });
+        const orderDateValues = orderDateLabels.map(
+          (date) => orderCountByDate[date]
+        );
+        renderOrdersByDateChart({
+          labels: orderDateLabels,
+          values: orderDateValues,
+        });
 
         // Inventory chart
         renderInventoryChart({
-            labels: inventory.map(item => item.fruitName),
-            values: inventory.map(item => item.quantityInKg || 0)
+          labels: inventory.map((item) => item.fruitName),
+          values: inventory.map((item) => item.quantityInKg || 0),
         });
-    }
+      }
 
-    // Listen for select change to update best seller table (using shared data)
-    window.addEventListener('DOMContentLoaded', () => {
-        const select = document.getElementById('bestseller-mode');
+      // Listen for select change to update best seller table (using shared data)
+      window.addEventListener("DOMContentLoaded", () => {
+        const select = document.getElementById("bestseller-mode");
         if (select) {
-            select.addEventListener('change', fetchDashboardDataAndRenderAll);
+          select.addEventListener("change", fetchDashboardDataAndRenderAll);
         }
-    });
+      });
 
-    // On dashboard load, fetch all data and render everything
-    window.addEventListener('DOMContentLoaded', fetchDashboardDataAndRenderAll);
-</script>
-
-</body>
+      // On dashboard load, fetch all data and render everything
+      window.addEventListener(
+        "DOMContentLoaded",
+        fetchDashboardDataAndRenderAll
+      );
+    </script>
+  </body>
 </html>

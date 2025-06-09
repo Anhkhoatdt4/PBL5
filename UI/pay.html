@@ -469,6 +469,17 @@
                 doc.save("hoa-don.pdf");
                 
                 createInvoice(items , customerName , customerPhone);
+                 if (orderQueue) {
+                    while (orderQueue.firstChild) {
+                        orderQueue.removeChild(orderQueue.firstChild);
+                    }
+                }
+                const fruitImage = document.getElementById('fruit-image');
+                if (fruitImage) {
+                    fruitImage.src = 'image/images.jpeg';
+                }
+
+                
             } catch (err) {
                 console.error("Lỗi trong quá trình xuất hóa đơn:", err);
             }

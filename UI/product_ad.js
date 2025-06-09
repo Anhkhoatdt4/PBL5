@@ -9,6 +9,7 @@ async function loadProducts() {
 
     data.forEach((item, index) => {
       const tr = document.createElement("tr");
+      tr.classList.add("product-row-hover"); // Thêm class cho hiệu ứng hover
       const lowStock = item.quantityInKg < 10;
       const quantityCell = lowStock
         ? `<td style="color: red; font-weight: bold;">${item.quantityInKg} <br><span style="font-size: 12px; color: darkred;">⚠ Sắp hết hàng!</span></td>`
@@ -203,3 +204,17 @@ if (document.readyState === 'loading') {
 } else {
   setupExportButton();
 }
+
+// Thêm CSS hiệu ứng hover cho các td trong bảng sản phẩm
+const style = document.createElement('style');
+style.innerHTML = `
+#productTable tr.product-row-hover td {
+  transition: background 0.18s, color 0.18s;
+}
+#productTable tr.product-row-hover:hover td {
+  background: #eaf1ff;
+  color: #3366ff;
+  cursor: pointer;
+}
+`;
+document.head.appendChild(style);
